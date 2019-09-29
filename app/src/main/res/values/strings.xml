@@ -6,4 +6,11 @@
     <string name="activity_main_credentials_submit_txt">Submit</string>
     <string name="activity_main_dont_have_account_txt">Don\'t have an account?</string>
     <string name="activity_main_create_account_btn_txt">Create an account</string>
+
+    <string name="activity_create_account_title">Registration</string>
+    <string name="activity_create_account_name_input_txt">Name</string>
+    <string name="activity_create_account_email_input_txt">Email</string>
+    <string name="activity_create_account_password_input_txt">Password</string>
+    <string name="activity_create_account_password_confirm_input_txt">Confirm password</string>
+    <string name="activity_create_account_create_btn_txt">CREATE ACCOUNT</string>
 </resources>
