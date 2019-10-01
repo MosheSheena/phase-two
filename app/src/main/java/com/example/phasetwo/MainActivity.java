@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkUserExists(String username) {
-        return false;
+        return true;
     }
 
     public UserType checkUserTypeByCredentials(String username) {
