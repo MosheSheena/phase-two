@@ -1,4 +1,5 @@
 <resources>
+    <!--Main activity-->
     <string name="app_name">PhaseTwo</string>
     <string name="activity_main_title">Phase-Two</string>
     <string name="activity_main_user_name_input">User name</string>
@@ -7,10 +8,15 @@
     <string name="activity_main_dont_have_account_txt">Don\'t have an account?</string>
     <string name="activity_main_create_account_btn_txt">Create an account</string>
 
+    <!--Create account activity-->
     <string name="activity_create_account_title">Registration</string>
     <string name="activity_create_account_name_input_txt">Name</string>
     <string name="activity_create_account_email_input_txt">Email</string>
     <string name="activity_create_account_password_input_txt">Password</string>
     <string name="activity_create_account_password_confirm_input_txt">Confirm password</string>
     <string name="activity_create_account_create_btn_txt">CREATE ACCOUNT</string>
+
+    <!--Provider menu activity-->
+    <string name="activity_provider_menu_view">View time</string>
+    <string name="activity_provider_menu_make">Make time</string>
 </resources>
