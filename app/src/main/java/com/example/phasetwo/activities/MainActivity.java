@@ -1,4 +1,4 @@
-package com.example.phasetwo;
+package com.example.phasetwo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.phasetwo.R;
+import com.example.phasetwo.common.UserType;
+
 public class MainActivity extends AppCompatActivity {
 
-    static final String EXTRA_USERNAME = "com.example.phasetwo.MainActivity.EXTRA_USERNAME";
+    static final String EXTRA_USERNAME = "com.example.phasetwo.activities.MainActivity.EXTRA_USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
             // TODO: do something if the user does not exist
         } else {
             // TODO: validate user password
-            // The user exists so now we need to find out which type it is (PROVIDER / CONSUMER)
+            // The user exists so now we need to find out which type it is (PRODUCER / CONSUMER)
             UserType userType = checkUserTypeByCredentials(username);
 
-            if (userType == UserType.PROVIDER) {
+            if (userType == UserType.PRODUCER) {
                 loginProvider(view, username);
             }
         }
@@ -48,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public UserType checkUserTypeByCredentials(String username) {
-        return UserType.PROVIDER;
+        return UserType.PRODUCER;
     }
 
     public void loginProvider(View view, String username) {
-        Intent intent = new Intent(this, ProviderMainMenu.class);
+        Intent intent = new Intent(this, ProviderMainMenuActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
     }
