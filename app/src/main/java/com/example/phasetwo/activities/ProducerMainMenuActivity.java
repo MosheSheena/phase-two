@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phasetwo.R;
 import com.example.phasetwo.adapters.TimeSlotAdapter;
 
-public class ProviderMainMenuActivity extends AppCompatActivity {
+public class ProducerMainMenuActivity extends AppCompatActivity {
 
     private static final int NUM_LIST_ITEMS = 100;
     private TimeSlotAdapter slotAdapter;
@@ -52,7 +52,7 @@ public class ProviderMainMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        Context context = ProviderMainMenuActivity.this;
+        Context context = ProducerMainMenuActivity.this;
 
         switch (menuItemThatWasSelected) {
             case R.id.action_view: {

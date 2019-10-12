@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.phasetwo.R;
@@ -14,48 +15,56 @@ public class MainActivity extends AppCompatActivity {
 
     static final String EXTRA_USERNAME = "com.example.phasetwo.activities.MainActivity.EXTRA_USERNAME";
 
+    EditText usernameInput;
+    EditText userPasswordInput;
+    Button submitCredentialsButton;
+    Button createNewAccountButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        usernameInput = (EditText) findViewById(R.id.userNameInput);
+        userPasswordInput = (EditText) findViewById(R.id.userPasswordInput);
+        submitCredentialsButton = (Button) findViewById(R.id.submitUserCredentialsButton);
+        createNewAccountButton = (Button) findViewById(R.id.createAccountButton);
+
+        submitCredentialsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login(view);
+            }
+        });
+
+        createNewAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createAccount(view);
+            }
+        });
     }
 
-    public void createAccount(View view) {
+    private void createAccount(View view) {
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
 
-    public void login(View view) {
-        EditText usernameInput = (EditText) findViewById(R.id.userNameInput);
-        EditText passwordInput = (EditText) findViewById(R.id.userPasswordInput);
-
+    private void login(View view) {
         String username = usernameInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        String password = userPasswordInput.getText().toString();
 
-        boolean userExists = checkUserExists(username);
-        if (!userExists) {
-            // TODO: do something if the user does not exist
-        } else {
-            // TODO: validate user password
-            // The user exists so now we need to find out which type it is (PRODUCER / CONSUMER)
-            UserType userType = checkUserTypeByCredentials(username);
+        //TODO: check if the user exists
+        //TODO: validate password
+        //TODO: if the user exists log him in according to his type
+        //TODO: if the user does not exist notify him
 
-            if (userType == UserType.PRODUCER) {
-                loginProvider(view, username);
-            }
-        }
-    }
 
-    public boolean checkUserExists(String username) {
-        return true;
-    }
-
-    public UserType checkUserTypeByCredentials(String username) {
-        return UserType.PRODUCER;
-    }
-
-    public void loginProvider(View view, String username) {
-        Intent intent = new Intent(this, ProviderMainMenuActivity.class);
+        //TODO: check which type is the user (PRODUCER / CONSUMER)
+        UserType userType = UserType.PRODUCER;
+        Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
+                ProducerMainMenuActivity.class : ConsumerMainMenuActivity.class;
+        Intent intent = new Intent(this, activityToMoveTo);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
     }
