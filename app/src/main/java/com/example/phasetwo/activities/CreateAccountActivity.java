@@ -2,11 +2,13 @@ package com.example.phasetwo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.phasetwo.R;
 import com.example.phasetwo.common.UserType;
@@ -61,29 +63,48 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private boolean verifyInput() {
+
+        Context context = getApplicationContext();
+        CharSequence text;
+        StringBuilder message = new StringBuilder("please fill in");
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast;
+
         if(nameInput.getText().toString().isEmpty()) {
-            //TODO: handle
+            message.append(" name");
+            toast = Toast.makeText(context, message.toString(), duration);
+            toast.show();
             return false;
         }
         if(emailInput.getText().toString().isEmpty()) {
-            //TODO: handle
+            message.append(" email");
+            toast = Toast.makeText(context, message.toString(), duration);
+            toast.show();
             return false;
         }
         if(passwordInput.getText().toString().isEmpty()) {
-            //TODO: handle
+            message.append(" password");
+            toast = Toast.makeText(context, message.toString(), duration);
+            toast.show();
             return false;
         }
         if(passwordVerifyInput.getText().toString().isEmpty()) {
-            //TODO: handle
+            message.append(" password verification");
+            toast = Toast.makeText(context, message.toString(), duration);
+            toast.show();
             return false;
         }
         if(!passwordInput.getText().toString().equals(
                 passwordVerifyInput.getText().toString())) {
-            //TODO: handle
+            CharSequence passwordMismatchMessage = "passwords do not match!";
+            toast = Toast.makeText(context, passwordMismatchMessage, duration);
+            toast.show();
             return false;
         }
         if(!typeConsumerRadioButton.isChecked() && !typeProducerRadioButton.isChecked()) {
-            //TODO: handle
+            message.append(" type");
+            toast = Toast.makeText(context, message.toString(), duration);
+            toast.show();
             return false;
         }
         return true;
