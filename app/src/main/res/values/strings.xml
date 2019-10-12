@@ -18,7 +18,11 @@
     <string name="activity_create_account_user_type_producer">PRODUCER</string>
     <string name="activity_create_account_user_type_consumer">CONSUMER</string>
 
-    <!--Provider menu activity-->
-    <string name="activity_provider_menu_view">View time</string>
-    <string name="activity_provider_menu_make">Make time</string>
+    <!--Prodcuer menu activity-->
+    <string name="activity_producer_menu_view">View time</string>
+    <string name="activity_producer_menu_make">Make time</string>
+
+    <!--Consumer menu activity-->
+    <string name="activity_consumer_menu_view">View time</string>
+    <string name="activity_consumer_menu_book">Book time</string>
 </resources>
