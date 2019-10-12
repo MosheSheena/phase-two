@@ -1,4 +1,4 @@
-package com.example.phasetwo;
+package com.example.phasetwo.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProviderMainMenu extends AppCompatActivity {
+import com.example.phasetwo.R;
+import com.example.phasetwo.adapters.TimeSlotAdapter;
+
+public class ProducerMainMenuActivity extends AppCompatActivity {
 
     private static final int NUM_LIST_ITEMS = 100;
     private TimeSlotAdapter slotAdapter;
@@ -49,7 +52,7 @@ public class ProviderMainMenu extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        Context context = ProviderMainMenu.this;
+        Context context = ProducerMainMenuActivity.this;
 
         switch (menuItemThatWasSelected) {
             case R.id.action_view: {
