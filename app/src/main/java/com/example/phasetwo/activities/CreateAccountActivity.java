@@ -1,7 +1,5 @@
 package com.example.phasetwo.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +8,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.phasetwo.R;
 import com.example.phasetwo.common.UserType;
-import com.example.phasetwo.iface.UserTO;
+import com.example.phasetwo.logic.UserEntity;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 UserType checkedUserType = typeConsumerRadioButton.isChecked() ? UserType.CONSUMER
                         : UserType.PRODUCER;
 
-                UserTO user = new UserTO(
+                UserEntity user = new UserEntity(
                         nameInput.getText().toString(),
                         emailInput.getText().toString(),
                         passwordInput.getText().toString(),
