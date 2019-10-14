@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "258754643169",
+    "firebase_url": "https://phasetwo.firebaseio.com",
+    "project_id": "phasetwo",
+    "storage_bucket": "phasetwo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258754643169:android:67e4a8e6efa4e85b1a23a0",
+        "android_client_info": {
+          "package_name": "com.example.phasetwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258754643169-87husf6794p80gqru03vrhavf03h4kat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoFhK2MlD1q-FtQhh2qLfvlnGGHnVBDAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258754643169-87husf6794p80gqru03vrhavf03h4kat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
