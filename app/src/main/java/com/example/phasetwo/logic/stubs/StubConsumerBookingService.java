@@ -1,5 +1,6 @@
 package com.example.phasetwo.logic.stubs;
 
+import com.example.phasetwo.common.TimeSlotDoesNotExistException;
 import com.example.phasetwo.common.UserDoesNotExistException;
 import com.example.phasetwo.logic.ConsumerBookingService;
 import com.example.phasetwo.logic.ConsumerEntity;
@@ -59,7 +60,7 @@ public class StubConsumerBookingService implements ConsumerBookingService {
     }
 
     @Override
-    public void bookTimeSlot(String consumerEmail, TimeSlotEntity timeSlot) throws UserDoesNotExistException {
+    public void bookTimeSlot(String consumerEmail, TimeSlotEntity timeSlot) throws UserDoesNotExistException, TimeSlotDoesNotExistException {
         UserEntity consumer = userManagementService.getUserByEmail(consumerEmail);
         timeSlotService.bookTimeSlot(timeSlot, consumer);
     }

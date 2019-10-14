@@ -14,14 +14,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.adapters.TimeSlotAdapter;
+import com.example.phasetwo.adapters.SimpleNumbersAdapter;
 
 public class ConsumerMainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = ConsumerMainMenuActivity.class.getSimpleName();
 
     private static final int NUM_LIST_ITEMS = 100;
-    private TimeSlotAdapter slotAdapter;
+    private SimpleNumbersAdapter slotAdapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -48,7 +48,7 @@ public class ConsumerMainMenuActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
 
-        slotAdapter = new TimeSlotAdapter(NUM_LIST_ITEMS);
+        slotAdapter = new SimpleNumbersAdapter(NUM_LIST_ITEMS);
 
         recyclerView.setAdapter(slotAdapter);
     }
