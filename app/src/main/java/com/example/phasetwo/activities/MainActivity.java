@@ -9,11 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.phasetwo.R;
+import com.example.phasetwo.activities.ui.producer.ProducerMenuActivity;
 import com.example.phasetwo.common.UserType;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String EXTRA_USERNAME = "com.example.phasetwo.activities.MainActivity.EXTRA_USERNAME";
+    public static final String EXTRA_USERNAME = "com.example.phasetwo.activities.MainActivity.EXTRA_USERNAME";
 
     EditText usernameInput;
     EditText userPasswordInput;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: check which type is the user (PRODUCER / CONSUMER)
         UserType userType = UserType.PRODUCER;
         Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
-                ProducerMainMenuActivity.class : ConsumerMainMenuActivity.class;
+                ProducerMenuActivity.class : ConsumerMainMenuActivity.class;
         Intent intent = new Intent(this, activityToMoveTo);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);

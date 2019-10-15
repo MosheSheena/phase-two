@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ui.producer.ProducerMakeTimeActivity">
+
+    <TextView
+        android:id="@+id/producerMakeTimeDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:fontFamily="monospace"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/producerMakeTimeStartTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:fontFamily="monospace"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producerMakeTimeDateText" />
+
+    <TextView
+        android:id="@+id/producerMakeTimeEndTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:fontFamily="monospace"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producerMakeTimeStartTimeText" />
+
+    <Button
+        android:id="@+id/producerMakeTimeDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/activity_producer_make_time_date_btn_txt"
+        app:layout_constraintBaseline_toBaselineOf="@+id/producerMakeTimeDateText"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/producerMakeTimeStartTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/activity_producer_make_time_stime_btn_txt"
+        app:layout_constraintBaseline_toBaselineOf="@+id/producerMakeTimeStartTimeText"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/producerMakeTimeEndTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/activity_producer_make_time_etime_btn_txt"
+        app:layout_constraintBaseline_toBaselineOf="@+id/producerMakeTimeEndTimeText"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/producerMakeTimeMakeTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/activity_producer_make_time_make_btn_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/producerMakeTimeEndTimeButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

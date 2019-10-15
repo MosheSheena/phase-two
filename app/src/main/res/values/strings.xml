@@ -22,6 +22,12 @@
     <string name="activity_producer_menu_view">View time</string>
     <string name="activity_producer_menu_make">Make time</string>
 
+    <!--Prodcuer make time activity-->
+    <string name="activity_producer_make_time_date_btn_txt">Choose date</string>
+    <string name="activity_producer_make_time_stime_btn_txt">Choose Start time</string>
+    <string name="activity_producer_make_time_etime_btn_txt">Choose End time</string>
+    <string name="activity_producer_make_time_make_btn_txt">Make Time</string>
+
     <!--Consumer menu activity-->
     <string name="activity_consumer_menu_view">View time</string>
     <string name="activity_consumer_menu_book">Book time</string>
