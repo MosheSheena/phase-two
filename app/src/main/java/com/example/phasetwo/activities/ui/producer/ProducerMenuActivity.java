@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.activities.MainActivity;
 import com.example.phasetwo.adapters.TimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlotEntity;
 
@@ -25,8 +23,6 @@ import java.util.List;
 public class ProducerMenuActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMenuActivity.class.getSimpleName();
-
-    public static final String EXTRA_USERNAME = "com.example.phasetwo.activities.ui.producer.EXTRA_USERNAME";
 
     private ProducerMenuViewModel producerMenuViewModel;
 
@@ -48,8 +44,8 @@ public class ProducerMenuActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
 
-        if (intent.hasExtra(MainActivity.EXTRA_USERNAME)) {
-            userName = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        if (intent.hasExtra(Intent.EXTRA_USER)) {
+            userName = intent.getStringExtra(Intent.EXTRA_USER);
         }
         if (userName == null) {
             Log.e(TAG, "onCreate: username was not passed by MainActivity");
@@ -88,7 +84,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
             }
             case R.id.producer_action_make: {
                 Intent intent = new Intent(this, ProducerMakeTimeActivity.class);
-                intent.putExtra(EXTRA_USERNAME, userName);
+                intent.putExtra(Intent.EXTRA_USER, userName);
                 startActivity(intent);
                 break;
             }

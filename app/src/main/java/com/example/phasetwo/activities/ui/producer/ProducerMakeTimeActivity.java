@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -26,6 +25,8 @@ import java.util.Calendar;
 public class ProducerMakeTimeActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMakeTimeActivity.class.getSimpleName();
+
+    public static final String EXTRA_USERNAME = "com.example.phasetwo.activities.ui.producer.EXTRA_USERNAME";
 
     private ProducerMakeTimeViewModel viewModel;
 
@@ -64,8 +65,8 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
 
-        if (intent.hasExtra(ProducerMenuActivity.EXTRA_USERNAME)) {
-            userName = intent.getStringExtra(ProducerMenuActivity.EXTRA_USERNAME);
+        if (intent.hasExtra(Intent.EXTRA_USER)) {
+            userName = intent.getStringExtra(Intent.EXTRA_USER);
         }
         if (userName == null) {
             Log.e(TAG, "onCreate: username was not passed by MainActivity");
@@ -165,10 +166,12 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -187,6 +190,10 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
                             LocalDate.of(mChosenYear, mChosenMonth, mChosenDay),
                             LocalTime.of(mChosenStartHour, mChosenStartMinute),
                             LocalTime.of(mChosenEndHour, mChosenEndMinute));
+
+                    Intent intent = new Intent(getApplicationContext(), ProducerMenuActivity.class);
+                    intent.putExtra(Intent.EXTRA_USER, userName);
+                    startActivity(intent);
                 }
             }
         });

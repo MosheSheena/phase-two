@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
                         ProducerMenuActivity.class : ConsumerMainMenuActivity.class;
                 Intent intent = new Intent(LoginActivity.this, activityToMoveTo);
+                intent.putExtra(Intent.EXTRA_USER, usernameEditText.getText().toString());
                 startActivity(intent);
             }
         });
