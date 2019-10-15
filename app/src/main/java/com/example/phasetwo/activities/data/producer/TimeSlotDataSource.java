@@ -42,4 +42,9 @@ public class TimeSlotDataSource {
             return new Result.Error(new IOException("Error fetching time slots for user=" + userName));
         }
     }
+
+    public Result<Boolean> createNewTimeSlot(String userId, LocalDate date,
+                                             LocalTime startTime, LocalTime endTime) {
+        return null;
+    }
 }

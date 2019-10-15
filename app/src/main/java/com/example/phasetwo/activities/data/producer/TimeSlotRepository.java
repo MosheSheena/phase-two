@@ -3,6 +3,8 @@ package com.example.phasetwo.activities.data.producer;
 import com.example.phasetwo.activities.data.Result;
 import com.example.phasetwo.logic.TimeSlotEntity;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class TimeSlotRepository {
@@ -27,5 +29,10 @@ public class TimeSlotRepository {
             //TODO: caching happens here
         }
         return result;
+    }
+
+    public Result<Boolean> createNewTimeSlot(String userId, LocalDate date,
+                                             LocalTime startTime, LocalTime endTime) {
+        return dataSource.createNewTimeSlot(userId, date, startTime, endTime);
     }
 }

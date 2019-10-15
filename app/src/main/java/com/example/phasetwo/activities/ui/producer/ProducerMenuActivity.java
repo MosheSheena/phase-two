@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,12 +26,16 @@ public class ProducerMenuActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMenuActivity.class.getSimpleName();
 
+    public static final String EXTRA_USERNAME = "com.example.phasetwo.activities.ui.producer.EXTRA_USERNAME";
+
     private ProducerMenuViewModel producerMenuViewModel;
 
     private TimeSlotsAdapter slotAdapter;
     private RecyclerView recyclerView;
 
     private final int NUMBER_OF_TIME_SLOTS = 20;
+
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,6 @@ public class ProducerMenuActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-
-        String userName = null;
 
         if (intent.hasExtra(MainActivity.EXTRA_USERNAME)) {
             userName = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
@@ -83,13 +84,12 @@ public class ProducerMenuActivity extends AppCompatActivity {
 
         switch (menuItemThatWasSelected) {
             case R.id.producer_action_view: {
-                String message = "view selected";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 break;
             }
             case R.id.producer_action_make: {
-                String message = "make selected";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ProducerMakeTimeActivity.class);
+                intent.putExtra(EXTRA_USERNAME, userName);
+                startActivity(intent);
                 break;
             }
             default: {
