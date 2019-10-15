@@ -12,32 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
 
-public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.TimeSlotViewHolder>{
+public class SimpleNumbersAdapter extends RecyclerView.Adapter<SimpleNumbersAdapter.NumberViewHolder>{
 
-    private static final String TAG = TimeSlotAdapter.class.getSimpleName();
+    private static final String TAG = SimpleNumbersAdapter.class.getSimpleName();
 
     private int mNumberItems;
 
-    public TimeSlotAdapter(int numberOfItems) {
+    public SimpleNumbersAdapter(int numberOfItems) {
         mNumberItems = numberOfItems;
     }
 
     @NonNull
     @Override
-    public TimeSlotViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public NumberViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.provider_time_slot_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        TimeSlotViewHolder viewHolder = new TimeSlotViewHolder(view);
+        NumberViewHolder viewHolder = new NumberViewHolder(view);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimeSlotViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NumberViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
         holder.bind(position);
     }
@@ -47,11 +47,11 @@ public class TimeSlotAdapter extends RecyclerView.Adapter<TimeSlotAdapter.TimeSl
         return mNumberItems;
     }
 
-    class TimeSlotViewHolder extends RecyclerView.ViewHolder {
+    class NumberViewHolder extends RecyclerView.ViewHolder {
 
         TextView timeSlotTextView;
 
-        public TimeSlotViewHolder(@NonNull View itemView) {
+        public NumberViewHolder(@NonNull View itemView) {
             super(itemView);
             timeSlotTextView = (TextView) itemView.findViewById(R.id.tv_item_text);
         }

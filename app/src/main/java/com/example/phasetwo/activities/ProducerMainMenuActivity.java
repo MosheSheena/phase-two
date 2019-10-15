@@ -14,14 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.adapters.TimeSlotAdapter;
+import com.example.phasetwo.adapters.TimeSlotsAdapter;
+import com.example.phasetwo.common.UserType;
+import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.UserEntity;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProducerMainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMainMenuActivity.class.getSimpleName();
 
-    private static final int NUM_LIST_ITEMS = 100;
-    private TimeSlotAdapter slotAdapter;
+    private TimeSlotsAdapter slotAdapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -48,7 +55,25 @@ public class ProducerMainMenuActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
 
-        slotAdapter = new TimeSlotAdapter(NUM_LIST_ITEMS);
+//        UserEntity userEntity = new UserEntity("Earl", "email", "1", UserType.PRODUCER);
+//        TimeSlotEntity ts1 = new TimeSlotEntity(userEntity,
+//                LocalDate.of(2019, 10, 18),
+//                LocalTime.of(7, 0),
+//                LocalTime.of(7, 30));
+//        TimeSlotEntity ts2 = new TimeSlotEntity(userEntity,
+//                LocalDate.of(2019, 11, 18),
+//                LocalTime.of(7, 0),
+//                LocalTime.of(7, 30));
+//        TimeSlotEntity ts3 = new TimeSlotEntity(userEntity,
+//                LocalDate.of(2019, 12, 18),
+//                LocalTime.of(7, 0),
+//                LocalTime.of(7, 30));
+//        List<TimeSlotEntity> l = new ArrayList<>();
+//        l.add(ts1);
+//        l.add(ts2);
+//        l.add(ts3);
+
+        slotAdapter = new TimeSlotsAdapter(null); //TODO: change to a real list
 
         recyclerView.setAdapter(slotAdapter);
     }
