@@ -1,5 +1,6 @@
-package com.example.phasetwo.activities.data;
+package com.example.phasetwo.activities.data.login;
 
+import com.example.phasetwo.activities.data.Result;
 import com.example.phasetwo.activities.data.model.LoggedInUser;
 
 /**

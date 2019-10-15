@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.example.phasetwo.activities.data.LoginRepository;
+import com.example.phasetwo.activities.data.login.LoginRepository;
 import com.example.phasetwo.activities.data.Result;
 import com.example.phasetwo.activities.data.model.LoggedInUser;
 import com.example.phasetwo.R;

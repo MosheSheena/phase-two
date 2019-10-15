@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ConsumerMainMenuActivity" />
-        <activity android:name=".activities.ProducerMainMenuActivity" />
+        <activity android:name=".activities.ui.producer.ProducerMenuActivity" />
         <activity
             android:name=".activities.CreateAccountActivity"
             android:parentActivityName=".activities.MainActivity">

@@ -25,9 +25,7 @@ import android.widget.Toast;
 
 import com.example.phasetwo.R;
 import com.example.phasetwo.activities.ConsumerMainMenuActivity;
-import com.example.phasetwo.activities.ProducerMainMenuActivity;
-import com.example.phasetwo.activities.ui.login.LoginViewModel;
-import com.example.phasetwo.activities.ui.login.LoginViewModelFactory;
+import com.example.phasetwo.activities.ui.producer.ProducerMenuActivity;
 import com.example.phasetwo.common.UserType;
 
 public class LoginActivity extends AppCompatActivity {
@@ -81,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 UserType userType = UserType.PRODUCER;
                 Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
-                        ProducerMainMenuActivity.class : ConsumerMainMenuActivity.class;
+                        ProducerMenuActivity.class : ConsumerMainMenuActivity.class;
                 Intent intent = new Intent(LoginActivity.this, activityToMoveTo);
                 startActivity(intent);
             }
