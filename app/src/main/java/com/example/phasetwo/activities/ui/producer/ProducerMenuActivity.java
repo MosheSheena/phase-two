@@ -3,7 +3,6 @@ package com.example.phasetwo.activities.ui.producer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
 import com.example.phasetwo.adapters.TimeSlotsAdapter;
-import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.TimeSlot;
 
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class ProducerMenuActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMenuActivity.class.getSimpleName();
 
-    private ProducerMenuViewModel producerMenuViewModel;
+    private ProducerMenuViewModel viewModel;
 
-    private TimeSlotsAdapter slotAdapter;
+    private TimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
     private final int NUMBER_OF_TIME_SLOTS = 20;
@@ -38,17 +37,13 @@ public class ProducerMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producer_main_menu);
 
-        producerMenuViewModel = ViewModelProviders.of(this,
+        viewModel = ViewModelProviders.of(this,
                 new ProducerMenuViewModelFactory()).get(ProducerMenuViewModel.class);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-
         if (intent.hasExtra(Intent.EXTRA_USER)) {
             userName = intent.getStringExtra(Intent.EXTRA_USER);
-        }
-        if (userName == null) {
-            Log.e(TAG, "onCreate: username was not passed by MainActivity");
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_producer_menu);
@@ -56,15 +51,15 @@ public class ProducerMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        producerMenuViewModel.getTimeSlots().observe(this, new Observer<List<TimeSlotEntity>>() {
+        viewModel.getTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
-            public void onChanged(List<TimeSlotEntity> timeSlotEntities) {
-                slotAdapter = new TimeSlotsAdapter(producerMenuViewModel.getTimeSlots().getValue());
-                recyclerView.setAdapter(slotAdapter);
+            public void onChanged(List<TimeSlot> timeSlots) {
+                adapter = new TimeSlotsAdapter(timeSlots);
+                recyclerView.setAdapter(adapter);
             }
         });
 
-        producerMenuViewModel.fetchTimeSlots(userName, NUMBER_OF_TIME_SLOTS);
+        viewModel.fetchTimeSlots(userName, NUMBER_OF_TIME_SLOTS);
     }
 
     @Override

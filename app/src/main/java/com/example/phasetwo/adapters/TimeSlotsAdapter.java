@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.TimeSlot;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.Time
 
     private static final String TAG = TimeSlotsAdapter.class.getSimpleName();
 
-    private List<TimeSlotEntity> timeSlots;
+    private List<TimeSlot> timeSlots;
 
-    public TimeSlotsAdapter(List<TimeSlotEntity> timeSlots) {
+    public TimeSlotsAdapter(List<TimeSlot> timeSlots) {
         this.timeSlots = timeSlots;
     }
 
@@ -41,7 +41,7 @@ public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.Time
 
     @Override
     public void onBindViewHolder(@NonNull TimeSlotViewHolder holder, int position) {
-        TimeSlotEntity timeSlot = timeSlots.get(position);
+        TimeSlot timeSlot = timeSlots.get(position);
 
         holder.setDateText(timeSlot.getDate().toString());
         holder.setStartingTimeText(timeSlot.getStartingTime().toString());

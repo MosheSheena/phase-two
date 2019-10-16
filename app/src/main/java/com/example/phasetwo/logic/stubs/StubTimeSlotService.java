@@ -1,7 +1,7 @@
 package com.example.phasetwo.logic.stubs;
 
 import com.example.phasetwo.common.TimeSlotDoesNotExistException;
-import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.TimeSlot;
 import com.example.phasetwo.logic.TimeSlotService;
 import com.example.phasetwo.logic.UserEntity;
 
@@ -12,22 +12,22 @@ import java.util.List;
 
 public class StubTimeSlotService implements TimeSlotService {
 
-    private List<TimeSlotEntity> timeSlots;
+    private List<TimeSlot> timeSlots;
 
     public StubTimeSlotService() {
         this.timeSlots = new ArrayList<>();
     }
 
     @Override
-    public List<TimeSlotEntity> getAllTimeSlots() {
+    public List<TimeSlot> getAllTimeSlots() {
         return timeSlots;
     }
 
     @Override
-    public List<TimeSlotEntity> getAllTimeSlotsByOwner(UserEntity owner) {
-        List<TimeSlotEntity> results = new ArrayList<>();
+    public List<TimeSlot> getAllTimeSlotsByOwner(UserEntity owner) {
+        List<TimeSlot> results = new ArrayList<>();
 
-        for (TimeSlotEntity timeSlot: timeSlots
+        for (TimeSlot timeSlot: timeSlots
              ) {
             if (timeSlot.getOwner().equals(owner))
                 results.add(timeSlot);
@@ -36,10 +36,10 @@ public class StubTimeSlotService implements TimeSlotService {
     }
 
     @Override
-    public List<TimeSlotEntity> getAllTimeSlotsByAcquirer(UserEntity acquirer) {
-        List<TimeSlotEntity> results = new ArrayList<>();
+    public List<TimeSlot> getAllTimeSlotsByAcquirer(UserEntity acquirer) {
+        List<TimeSlot> results = new ArrayList<>();
 
-        for (TimeSlotEntity timeSlot: timeSlots
+        for (TimeSlot timeSlot: timeSlots
         ) {
             if (timeSlot.getAcquirer().equals(acquirer))
                 results.add(timeSlot);
@@ -48,13 +48,13 @@ public class StubTimeSlotService implements TimeSlotService {
     }
 
     @Override
-    public TimeSlotEntity createNewTimeSlot(UserEntity owner, LocalDate date,
-                                            LocalTime startingTime, LocalTime endingTime) {
-        return new TimeSlotEntity(owner, date, startingTime, endingTime);
+    public TimeSlot createNewTimeSlot(UserEntity owner, LocalDate date,
+                                      LocalTime startingTime, LocalTime endingTime) {
+        return new TimeSlot(owner, date, startingTime, endingTime);
     }
 
     @Override
-    public void bookTimeSlot(TimeSlotEntity timeSlot, UserEntity consumer) throws TimeSlotDoesNotExistException {
+    public void bookTimeSlot(TimeSlot timeSlot, UserEntity consumer) throws TimeSlotDoesNotExistException {
         if (!timeSlots.contains(timeSlot))
             throw new TimeSlotDoesNotExistException("no such time slot: " + timeSlot);
 

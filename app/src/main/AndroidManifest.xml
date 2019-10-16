@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ConsumerMainMenuActivity" />
+        <activity android:name=".activities.ui.consumer.ConsumerMenuActivity" />
         <activity android:name=".activities.ui.producer.ProducerMenuActivity" />
         <activity
             android:name=".activities.CreateAccountActivity"

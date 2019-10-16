@@ -2,16 +2,16 @@ package com.example.phasetwo.activities.ui.producer;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.phasetwo.activities.data.producer.TimeSlotRepository;
+import com.example.phasetwo.activities.data.producer.ProducerRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ProducerMakeTimeViewModel extends ViewModel {
 
-    private TimeSlotRepository repository;
+    private ProducerRepository repository;
 
-    ProducerMakeTimeViewModel(TimeSlotRepository repository) {
+    ProducerMakeTimeViewModel(ProducerRepository repository) {
         this.repository = repository;
     }
 

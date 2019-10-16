@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.phasetwo.activities.data.producer.TimeSlotDataSource;
-import com.example.phasetwo.activities.data.producer.TimeSlotRepository;
+import com.example.phasetwo.activities.data.producer.ProducerDataSource;
+import com.example.phasetwo.activities.data.producer.ProducerRepository;
 
 public class ProducerMenuViewModelFactory implements ViewModelProvider.Factory {
 
@@ -14,7 +14,7 @@ public class ProducerMenuViewModelFactory implements ViewModelProvider.Factory {
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ProducerMenuViewModel.class)) {
-            return (T) new ProducerMenuViewModel(TimeSlotRepository.getInstance(new TimeSlotDataSource()));
+            return (T) new ProducerMenuViewModel(ProducerRepository.getInstance(new ProducerDataSource()));
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

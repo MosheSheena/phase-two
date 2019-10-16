@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.phasetwo.R;
+import com.example.phasetwo.activities.ui.consumer.ConsumerMenuActivity;
 import com.example.phasetwo.activities.ui.producer.ProducerMenuActivity;
 import com.example.phasetwo.common.UserType;
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: check which type is the user (PRODUCER / CONSUMER)
         UserType userType = UserType.PRODUCER;
         Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
-                ProducerMenuActivity.class : ConsumerMainMenuActivity.class;
+                ProducerMenuActivity.class : ConsumerMenuActivity.class;
         Intent intent = new Intent(this, activityToMoveTo);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);

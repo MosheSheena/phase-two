@@ -11,9 +11,9 @@ public interface ConsumerBookingService {
 
     void registerConsumerToProducer(String consumerEmail, String producerEmail) throws UserDoesNotExistException;
 
-    List<TimeSlotEntity> getProducerAvailableTimeSlotsForConsumer(String consumerEmail) throws UserDoesNotExistException;
+    List<TimeSlot> getProducerAvailableTimeSlotsForConsumer(String consumerEmail) throws UserDoesNotExistException;
 
-    void bookTimeSlot(String consumerEmail, TimeSlotEntity timeSlot) throws UserDoesNotExistException, TimeSlotDoesNotExistException;
+    void bookTimeSlot(String consumerEmail, TimeSlot timeSlot) throws UserDoesNotExistException, TimeSlotDoesNotExistException;
 
-    void cancelBookedTimeSlot(String consumerEmail, TimeSlotEntity timeSlot);
+    void cancelBookedTimeSlot(String consumerEmail, TimeSlot timeSlot);
 }

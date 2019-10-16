@@ -4,7 +4,7 @@ import com.example.phasetwo.common.TimeSlotDoesNotExistException;
 import com.example.phasetwo.common.UserDoesNotExistException;
 import com.example.phasetwo.logic.ConsumerBookingService;
 import com.example.phasetwo.logic.ConsumerEntity;
-import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.TimeSlot;
 import com.example.phasetwo.logic.TimeSlotService;
 import com.example.phasetwo.logic.UserEntity;
 import com.example.phasetwo.logic.UserManagementService;
@@ -41,16 +41,16 @@ public class StubConsumerBookingService implements ConsumerBookingService {
     }
 
     @Override
-    public List<TimeSlotEntity> getProducerAvailableTimeSlotsForConsumer(String consumerEmail) throws UserDoesNotExistException {
-        List<TimeSlotEntity> results = new ArrayList<>();
+    public List<TimeSlot> getProducerAvailableTimeSlotsForConsumer(String consumerEmail) throws UserDoesNotExistException {
+        List<TimeSlot> results = new ArrayList<>();
 
         ConsumerEntity consumer = (ConsumerEntity) userManagementService.getUserByEmail(consumerEmail);
 
         List<UserEntity> associatedProducers = consumer.getProducers();
         for (UserEntity producer: associatedProducers
              ) {
-                List<TimeSlotEntity> producerTimeSlots = timeSlotService.getAllTimeSlotsByOwner(producer);
-            for (TimeSlotEntity timeSlot: producerTimeSlots
+                List<TimeSlot> producerTimeSlots = timeSlotService.getAllTimeSlotsByOwner(producer);
+            for (TimeSlot timeSlot: producerTimeSlots
                  ) {
                 if (! timeSlot.isBooked())
                     results.add(timeSlot);
@@ -60,13 +60,13 @@ public class StubConsumerBookingService implements ConsumerBookingService {
     }
 
     @Override
-    public void bookTimeSlot(String consumerEmail, TimeSlotEntity timeSlot) throws UserDoesNotExistException, TimeSlotDoesNotExistException {
+    public void bookTimeSlot(String consumerEmail, TimeSlot timeSlot) throws UserDoesNotExistException, TimeSlotDoesNotExistException {
         UserEntity consumer = userManagementService.getUserByEmail(consumerEmail);
         timeSlotService.bookTimeSlot(timeSlot, consumer);
     }
 
     @Override
-    public void cancelBookedTimeSlot(String consumerEmail, TimeSlotEntity timeSlot) {
+    public void cancelBookedTimeSlot(String consumerEmail, TimeSlot timeSlot) {
         //TODO: needs implementation
     }
 }
