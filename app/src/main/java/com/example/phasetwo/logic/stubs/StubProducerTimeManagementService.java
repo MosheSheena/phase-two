@@ -2,7 +2,7 @@ package com.example.phasetwo.logic.stubs;
 
 import com.example.phasetwo.common.UserDoesNotExistException;
 import com.example.phasetwo.logic.ProducerTimeManagementService;
-import com.example.phasetwo.logic.TimeSlotEntity;
+import com.example.phasetwo.logic.TimeSlot;
 import com.example.phasetwo.logic.TimeSlotService;
 import com.example.phasetwo.logic.UserEntity;
 import com.example.phasetwo.logic.UserManagementService;
@@ -31,23 +31,23 @@ public class StubProducerTimeManagementService implements ProducerTimeManagement
     }
 
     @Override
-    public void cancelBookedTimeSlot(String producerEmail, TimeSlotEntity timeSlot) {
+    public void cancelBookedTimeSlot(String producerEmail, TimeSlot timeSlot) {
         //TODO: needs implementation
     }
 
     @Override
-    public List<TimeSlotEntity> getAllTimeSlots(String producerEmail) throws UserDoesNotExistException {
+    public List<TimeSlot> getAllTimeSlots(String producerEmail) throws UserDoesNotExistException {
         UserEntity producer = usersService.getUserByEmail(producerEmail);
 
         return timeSlotService.getAllTimeSlotsByOwner(producer);
     }
 
     @Override
-    public List<TimeSlotEntity> getAllBookedTimeSlots(String producerEmail) throws UserDoesNotExistException {
-        List<TimeSlotEntity> results = new ArrayList<>();
+    public List<TimeSlot> getAllBookedTimeSlots(String producerEmail) throws UserDoesNotExistException {
+        List<TimeSlot> results = new ArrayList<>();
 
-        List<TimeSlotEntity> allTimeSlots = getAllTimeSlots(producerEmail);
-        for (TimeSlotEntity timeSlot : allTimeSlots
+        List<TimeSlot> allTimeSlots = getAllTimeSlots(producerEmail);
+        for (TimeSlot timeSlot : allTimeSlots
         ) {
             if (timeSlot.isBooked())
                 results.add(timeSlot);
@@ -57,11 +57,11 @@ public class StubProducerTimeManagementService implements ProducerTimeManagement
     }
 
     @Override
-    public List<TimeSlotEntity> getAllUnBookedTimeSlots(String producerEmail) throws UserDoesNotExistException {
-        List<TimeSlotEntity> results = new ArrayList<>();
+    public List<TimeSlot> getAllUnBookedTimeSlots(String producerEmail) throws UserDoesNotExistException {
+        List<TimeSlot> results = new ArrayList<>();
 
-        List<TimeSlotEntity> allTimeSlots = getAllTimeSlots(producerEmail);
-        for (TimeSlotEntity timeSlot : allTimeSlots
+        List<TimeSlot> allTimeSlots = getAllTimeSlots(producerEmail);
+        for (TimeSlot timeSlot : allTimeSlots
         ) {
             if (!timeSlot.isBooked())
                 results.add(timeSlot);

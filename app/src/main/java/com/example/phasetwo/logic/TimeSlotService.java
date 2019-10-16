@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface TimeSlotService {
 
-    List<TimeSlotEntity> getAllTimeSlots();
+    List<TimeSlot> getAllTimeSlots();
 
-    List<TimeSlotEntity> getAllTimeSlotsByOwner(UserEntity owner);
+    List<TimeSlot> getAllTimeSlotsByOwner(UserEntity owner);
 
-    List<TimeSlotEntity> getAllTimeSlotsByAcquirer(UserEntity acquirer);
+    List<TimeSlot> getAllTimeSlotsByAcquirer(UserEntity acquirer);
 
-    TimeSlotEntity createNewTimeSlot(UserEntity owner, LocalDate date, LocalTime startingTime,
-                           LocalTime endingTime);
+    TimeSlot createNewTimeSlot(UserEntity owner, LocalDate date, LocalTime startingTime,
+                               LocalTime endingTime);
 
-    void bookTimeSlot(TimeSlotEntity timeSlot, UserEntity consumer) throws TimeSlotDoesNotExistException;
+    void bookTimeSlot(TimeSlot timeSlot, UserEntity consumer) throws TimeSlotDoesNotExistException;
 }

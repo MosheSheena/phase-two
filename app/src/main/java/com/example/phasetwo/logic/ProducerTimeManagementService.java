@@ -11,11 +11,11 @@ public interface ProducerTimeManagementService {
     void createNewTimeSlot(String producerEmail, LocalDate date, LocalTime startingTime,
                            LocalTime endingTime) throws UserDoesNotExistException;
 
-    void cancelBookedTimeSlot(String producerEmail, TimeSlotEntity timeSlot) throws UserDoesNotExistException;
+    void cancelBookedTimeSlot(String producerEmail, TimeSlot timeSlot) throws UserDoesNotExistException;
 
-    List<TimeSlotEntity> getAllTimeSlots(String producerEmail) throws UserDoesNotExistException;
+    List<TimeSlot> getAllTimeSlots(String producerEmail) throws UserDoesNotExistException;
 
-    List<TimeSlotEntity> getAllBookedTimeSlots(String producerEmail) throws UserDoesNotExistException;
+    List<TimeSlot> getAllBookedTimeSlots(String producerEmail) throws UserDoesNotExistException;
 
-    List<TimeSlotEntity> getAllUnBookedTimeSlots(String producerEmail) throws UserDoesNotExistException;
+    List<TimeSlot> getAllUnBookedTimeSlots(String producerEmail) throws UserDoesNotExistException;
 }

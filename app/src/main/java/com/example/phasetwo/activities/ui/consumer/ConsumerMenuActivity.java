@@ -1,56 +1,65 @@
-package com.example.phasetwo.activities;
+package com.example.phasetwo.activities.ui.consumer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.adapters.SimpleNumbersAdapter;
+import com.example.phasetwo.adapters.TimeSlotsAdapter;
+import com.example.phasetwo.logic.TimeSlot;
 
-public class ConsumerMainMenuActivity extends AppCompatActivity {
+import java.util.List;
 
-    private static final String TAG = ConsumerMainMenuActivity.class.getSimpleName();
+public class ConsumerMenuActivity extends AppCompatActivity {
 
-    private static final int NUM_LIST_ITEMS = 100;
-    private SimpleNumbersAdapter slotAdapter;
+    private static final String TAG = ConsumerMenuActivity.class.getSimpleName();
+
+    private ConsumerMenuViewModel viewModel;
+
+    private TimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
+
+    private final int NUMBER_OF_BOOKINGS = 20;
+
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consumer_main_menu);
 
+        viewModel = ViewModelProviders.of(this,
+                new ConsumerMenuViewModelFactory()).get(ConsumerMenuViewModel.class);
+
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String userName = null;
-        if(intent.hasExtra(MainActivity.EXTRA_USERNAME)) {
-            userName = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        }
-        if(userName == null) {
-            Log.e(TAG, "onCreate: username was not passed by MainActivity");
+        if(intent.hasExtra(Intent.EXTRA_USER)) {
+            userName = intent.getStringExtra(Intent.EXTRA_USER);
         }
 
-        // TODO: fetch details of the producer's appointments
-
-        recyclerView = (RecyclerView) findViewById(R.id.rv_consumer_menu);
-
+        recyclerView = (RecyclerView) findViewById(R.id.consumerMenuRV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         recyclerView.setHasFixedSize(true);
 
-        slotAdapter = new SimpleNumbersAdapter(NUM_LIST_ITEMS);
+        viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
+            @Override
+            public void onChanged(List<TimeSlot> timeSlots) {
+                adapter = new TimeSlotsAdapter(timeSlots);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
-        recyclerView.setAdapter(slotAdapter);
+        viewModel.getConsumerBookings(userName, NUMBER_OF_BOOKINGS);
     }
 
     @Override
@@ -62,17 +71,16 @@ public class ConsumerMainMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        Context context = ConsumerMainMenuActivity.this;
+        Context context = ConsumerMenuActivity.this;
 
         switch (menuItemThatWasSelected) {
             case R.id.consumer_action_view: {
-                String message = "view selected";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 break;
             }
             case R.id.consumer_action_book: {
-                String message = "book selected";
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ConsumerBookingActivity.class);
+                intent.putExtra(Intent.EXTRA_USER, userName);
+                startActivity(intent);
                 break;
             }
             default: {

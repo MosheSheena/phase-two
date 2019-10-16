@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.activities.ConsumerMainMenuActivity;
+import com.example.phasetwo.activities.ui.consumer.ConsumerMenuActivity;
 import com.example.phasetwo.activities.ui.producer.ProducerMenuActivity;
 import com.example.phasetwo.common.UserType;
 
@@ -77,9 +77,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Complete and destroy login activity once successful
                 finish();
-                UserType userType = UserType.PRODUCER;
+
+                UserType userType = UserType.CONSUMER;
                 Class<?> activityToMoveTo = userType.equals(UserType.PRODUCER) ?
-                        ProducerMenuActivity.class : ConsumerMainMenuActivity.class;
+                        ProducerMenuActivity.class : ConsumerMenuActivity.class;
                 Intent intent = new Intent(LoginActivity.this, activityToMoveTo);
                 intent.putExtra(Intent.EXTRA_USER, usernameEditText.getText().toString());
                 startActivity(intent);

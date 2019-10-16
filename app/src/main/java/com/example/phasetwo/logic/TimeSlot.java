@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class TimeSlotEntity {
+public class TimeSlot {
 
     private UserEntity owner;
     private LocalDate date;
@@ -13,7 +13,7 @@ public class TimeSlotEntity {
     private boolean booked;
     private UserEntity acquirer;
 
-    public TimeSlotEntity(UserEntity owner, LocalDate date, LocalTime startingTime, LocalTime endingTime) {
+    public TimeSlot(UserEntity owner, LocalDate date, LocalTime startingTime, LocalTime endingTime) {
         this.owner = owner;
         this.date = date;
         this.startingTime = startingTime;
@@ -69,7 +69,7 @@ public class TimeSlotEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TimeSlotEntity timeSlot = (TimeSlotEntity) o;
+        TimeSlot timeSlot = (TimeSlot) o;
         return booked == timeSlot.booked &&
                 owner.equals(timeSlot.owner) &&
                 date.equals(timeSlot.date) &&
