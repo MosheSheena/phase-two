@@ -1,9 +1,11 @@
 package com.example.phasetwo.activities.ui.consumer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -61,7 +63,34 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
 
     @Override
     public void onListItemClicked(int clickedItemIndex) {
-        Toast mToast = Toast.makeText(this, "Item #" + clickedItemIndex + " clicked", Toast.LENGTH_SHORT);
-        mToast.show();
+        final TimeSlot timeSlot = viewModel.getAvailableBookings().getValue().get(clickedItemIndex);
+
+        String message = new StringBuilder().append("Confirm booking to: ")
+                .append("\n- producer: ").append(timeSlot.getOwner().getName())
+                .append("\n- at: ").append(timeSlot.getDate().toString())
+                .append("\n- starting at: ").append(timeSlot.getStartingTime().toString())
+                .append("\n- ending at: ").append(timeSlot.getEndingTime().toString())
+                .toString();
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.booking_title)
+                .setMessage(message);
+
+        builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.bookTime(userName, timeSlot);
+            }
+        });
+
+        builder.setNegativeButton(R.string.booking_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Nothing really to do when the user regrets trying to book
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

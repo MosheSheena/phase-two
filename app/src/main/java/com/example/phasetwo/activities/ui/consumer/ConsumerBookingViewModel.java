@@ -30,4 +30,8 @@ class ConsumerBookingViewModel extends ViewModel {
             availableBookings.setValue(data);
         }
     }
+
+    public void bookTime(String userName, TimeSlot requestedTimeSlot) {
+
+    }
 }
