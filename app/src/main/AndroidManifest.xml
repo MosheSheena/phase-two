@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".activities.ui.producer.ProducerMakeTimeActivity"></activity>
+        <activity android:name=".activities.ui.consumer.ConsumerBookingActivity"></activity>
+        <activity android:name=".activities.ui.producer.ProducerMakeTimeActivity" />
         <activity
             android:name=".activities.ui.login.LoginActivity"
             android:label="@string/title_activity_login">
@@ -30,7 +31,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>

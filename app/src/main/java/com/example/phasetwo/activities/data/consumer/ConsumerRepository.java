@@ -22,4 +22,8 @@ public class ConsumerRepository {
     public Result<List<TimeSlot>> getBookings(String userName, int numberOfBookings) {
         return dataSource.getBookings(userName, numberOfBookings);
     }
+
+    public Result<List<TimeSlot>> getAvailableTimeSlotsForConsumer(String userName, int numberOfSlotsToGet) {
+        return dataSource.getAvailableTimeSlotsForConsumer(userName, numberOfSlotsToGet);
+    }
 }

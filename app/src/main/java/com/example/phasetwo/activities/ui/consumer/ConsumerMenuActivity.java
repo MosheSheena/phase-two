@@ -46,7 +46,7 @@ public class ConsumerMenuActivity extends AppCompatActivity {
             userName = intent.getStringExtra(Intent.EXTRA_USER);
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_consumer_menu);
+        recyclerView = (RecyclerView) findViewById(R.id.consumerMenuRV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -78,6 +78,9 @@ public class ConsumerMenuActivity extends AppCompatActivity {
                 break;
             }
             case R.id.consumer_action_book: {
+                Intent intent = new Intent(this, ConsumerBookingActivity.class);
+                intent.putExtra(Intent.EXTRA_USER, userName);
+                startActivity(intent);
                 break;
             }
             default: {
