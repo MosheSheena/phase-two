@@ -25,32 +25,35 @@ public class StubTimeSlotService implements TimeSlotService {
 
     @Override
     public List<TimeSlot> getAllTimeSlotsByOwner(UserEntity owner) {
-        List<TimeSlot> results = new ArrayList<>();
-
-        for (TimeSlot timeSlot: timeSlots
-             ) {
-            if (timeSlot.getOwner().equals(owner))
-                results.add(timeSlot);
-        }
-        return results;
+//        List<TimeSlot> results = new ArrayList<>();
+//
+//        for (TimeSlot timeSlot: timeSlots
+//             ) {
+//            if (timeSlot.getOwner().equals(owner))
+//                results.add(timeSlot);
+//        }
+//        return results;
+        return null;
     }
 
     @Override
     public List<TimeSlot> getAllTimeSlotsByAcquirer(UserEntity acquirer) {
         List<TimeSlot> results = new ArrayList<>();
-
-        for (TimeSlot timeSlot: timeSlots
-        ) {
-            if (timeSlot.getAcquirer().equals(acquirer))
-                results.add(timeSlot);
-        }
+//
+//        for (TimeSlot timeSlot: timeSlots
+//        ) {
+//            if (timeSlot.getAcquirer().equals(acquirer))
+//                results.add(timeSlot);
+//        }
         return results;
+
     }
 
     @Override
     public TimeSlot createNewTimeSlot(UserEntity owner, LocalDate date,
                                       LocalTime startingTime, LocalTime endingTime) {
-        return new TimeSlot(owner, date, startingTime, endingTime);
+//        return new TimeSlot(owner, date, startingTime, endingTime);
+        return null;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class StubTimeSlotService implements TimeSlotService {
             throw new TimeSlotDoesNotExistException("no such time slot: " + timeSlot);
 
         timeSlot.setBooked(true);
-        timeSlot.setAcquirer(consumer);
+//        timeSlot.setAcquirer(consumer);
 
         int index = timeSlots.indexOf(timeSlot);
         timeSlots.set(index, timeSlot);

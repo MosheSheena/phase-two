@@ -2,31 +2,56 @@ package com.example.phasetwo.activities.data.producer;
 
 import com.example.phasetwo.activities.data.Result;
 import com.example.phasetwo.logic.TimeSlot;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+import java.util.Date;
 
 public class ProducerRepository {
-    
-    private static volatile ProducerRepository instance;
-    private ProducerDataSource dataSource;
-    
-    private ProducerRepository(ProducerDataSource dataSource) { this.dataSource = dataSource; }
 
-    public static ProducerRepository getInstance(ProducerDataSource dataSource) {
-        if (instance == null)
-            instance = new ProducerRepository(dataSource);
+    private static final String TAG = ProducerRepository.class.getSimpleName();
 
+    private static final ProducerRepository instance = new ProducerRepository();
+
+    private ProducerFirebaseHelper firebaseHelper;
+
+    private ProducerRepository() {
+        firebaseHelper = ProducerFirebaseHelper.getInstance();
+    }
+
+    public static ProducerRepository getInstance() {
         return instance;
     }
 
-    public Result<List<TimeSlot>> getTimeSlots(String userName, int numberOfTimeSlots) {
-        return dataSource.getTimeSlots(userName, numberOfTimeSlots);
+    public void getTimeSlots(String producerUid,
+                             OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        firebaseHelper.getTimeSlots(producerUid, onCompleteListener);
     }
 
-    public Result<Boolean> createNewTimeSlot(String userId, LocalDate date,
-                                             LocalTime startTime, LocalTime endTime) {
-        return dataSource.createNewTimeSlot(userId, date, startTime, endTime);
+    public void getTimeSlots(String producerUid, Date since, int numberOfTimeSlots,
+                                               OnCompleteListener<QuerySnapshot> onCompleteListener) {
+    }
+
+    public void getBookedTimeSlots(String producerUid,
+                                   OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        firebaseHelper.getBookedTimeSlots(producerUid, onCompleteListener);
+    }
+
+    public void getBookedTimeSlots(String producerUid, Date since, int numberOfTimeSlots,
+                                   OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        firebaseHelper.getBookedTimeSlots(producerUid, onCompleteListener);
+    }
+
+    public void createTimeSlot(TimeSlot timeSlot,
+                               OnSuccessListener<DocumentReference> onSuccessListener,
+                               OnFailureListener onFailureListener) {
+        firebaseHelper.createNewTimeSlot(timeSlot, onSuccessListener, onFailureListener);
+    }
+
+    public Result<Boolean> cancelBookedTimeSlot(String timeSlotId, String reason) {
+        return null;
     }
 }

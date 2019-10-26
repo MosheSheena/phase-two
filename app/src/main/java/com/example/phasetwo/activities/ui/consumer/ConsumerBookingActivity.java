@@ -65,16 +65,9 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
     public void onListItemClicked(int clickedItemIndex) {
         final TimeSlot timeSlot = viewModel.getAvailableBookings().getValue().get(clickedItemIndex);
 
-        String message = new StringBuilder().append("Confirm booking to: ")
-                .append("\n- producer: ").append(timeSlot.getOwner().getName())
-                .append("\n- at: ").append(timeSlot.getDate().toString())
-                .append("\n- starting at: ").append(timeSlot.getStartingTime().toString())
-                .append("\n- ending at: ").append(timeSlot.getEndingTime().toString())
-                .toString();
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.booking_title)
-                .setMessage(message);
+                .setMessage("Confirm ?");
 
         builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
             @Override

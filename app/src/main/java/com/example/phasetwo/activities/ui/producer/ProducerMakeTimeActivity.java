@@ -6,27 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.phasetwo.R;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ProducerMakeTimeActivity extends AppCompatActivity {
 
     private static final String TAG = ProducerMakeTimeActivity.class.getSimpleName();
-
-    public static final String EXTRA_USERNAME = "com.example.phasetwo.activities.ui.producer.EXTRA_USERNAME";
 
     private ProducerMakeTimeViewModel viewModel;
 
@@ -44,7 +43,7 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
     private int mChosenEndHour;
     private int mChosenEndMinute;
 
-    private String userName;
+    private String uid;
 
     private TextView dateDisplay;
     private TextView startTimeDisplay;
@@ -66,21 +65,16 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.hasExtra(Intent.EXTRA_USER)) {
-            userName = intent.getStringExtra(Intent.EXTRA_USER);
-        }
-        if (userName == null) {
-            Log.e(TAG, "onCreate: username was not passed by MainActivity");
+            uid = intent.getStringExtra(Intent.EXTRA_USER);
         }
 
-        dateDisplay = (TextView) findViewById(R.id.producerMakeTimeDateText);
-        startTimeDisplay = (TextView) findViewById(R.id.producerMakeTimeStartTimeText);
-        endTimeDisplay = (TextView) findViewById(R.id.producerMakeTimeEndTimeText);
-        dateButton = (Button) findViewById(R.id.producerMakeTimeDateButton);
-        startTimeButton = (Button) findViewById(R.id.producerMakeTimeStartTimeButton);
-        endTimeButton = (Button) findViewById(R.id.producerMakeTimeEndTimeButton);
-        makeTimeButton = (Button) findViewById(R.id.producerMakeTimeMakeTimeButton);
-
-        makeTimeButton.setEnabled(false);
+        dateDisplay = findViewById(R.id.producerMakeTimeDateText);
+        startTimeDisplay = findViewById(R.id.producerMakeTimeStartTimeText);
+        endTimeDisplay = findViewById(R.id.producerMakeTimeEndTimeText);
+        dateButton = findViewById(R.id.producerMakeTimeDateButton);
+        startTimeButton = findViewById(R.id.producerMakeTimeStartTimeButton);
+        endTimeButton = findViewById(R.id.producerMakeTimeEndTimeButton);
+        makeTimeButton = findViewById(R.id.producerMakeTimeMakeTimeButton);
 
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +124,7 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
 
                                 startTimeDisplay.setText(new StringBuilder()
                                         .append(chosenHour)
-                                        .append(":").append(chosenMinute));
+                                        .append(":").append(chosenMinute < 10 ? "0"+chosenMinute: chosenMinute));
                             }
                         }, currentHour, currentMinute, isTwentyFourHoursView);
                 timePickerDialog.show();
@@ -157,7 +151,7 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
 
                                 endTimeDisplay.setText(new StringBuilder()
                                         .append(chosenHour)
-                                        .append(":").append(chosenMinute));
+                                        .append(":").append(chosenMinute < 10 ? "0"+chosenMinute: chosenMinute));
                             }
                         }, currentHour, currentMinute, isTwentyFourHoursView);
                 timePickerDialog.show();
@@ -178,22 +172,38 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
                 makeTimeButton.setEnabled(validateFormFields());
             }
         };
+
         dateDisplay.addTextChangedListener(afterTextChangedListener);
         startTimeDisplay.addTextChangedListener(afterTextChangedListener);
         endTimeDisplay.addTextChangedListener(afterTextChangedListener);
+
+        viewModel.getCreationResult().observe(this, new Observer<TimeSlotCreationResult>() {
+
+            @Override
+            public void onChanged(TimeSlotCreationResult timeSlotCreationResult) {
+                if (timeSlotCreationResult.getSuccess() != null) {
+                    Intent intent = new Intent(getApplicationContext(), ProducerMenuActivity.class);
+                    intent.putExtra(Intent.EXTRA_USER, uid);
+                    startActivity(intent);
+                } else {
+                    if (timeSlotCreationResult.getError() != null) {
+                        int errorMessage = timeSlotCreationResult.getError();
+                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         makeTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validateFormFields()) {
-                    viewModel.createNewTimeSlot(userName,
-                            LocalDate.of(mChosenYear, mChosenMonth, mChosenDay),
-                            LocalTime.of(mChosenStartHour, mChosenStartMinute),
-                            LocalTime.of(mChosenEndHour, mChosenEndMinute));
+                    Date start = new GregorianCalendar(mChosenYear, mChosenMonth, mChosenDay,
+                            mChosenStartHour, mChosenStartMinute).getTime();
+                    Date end = new GregorianCalendar(mChosenYear, mChosenMonth, mChosenDay,
+                            mChosenEndHour, mChosenEndMinute).getTime();
 
-                    Intent intent = new Intent(getApplicationContext(), ProducerMenuActivity.class);
-                    intent.putExtra(Intent.EXTRA_USER, userName);
-                    startActivity(intent);
+                    viewModel.createNewTimeSlot(uid, start, end);
                 }
             }
         });

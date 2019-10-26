@@ -1,52 +1,53 @@
 package com.example.phasetwo.logic;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Objects;
+import java.util.Date;
 
 public class TimeSlot {
 
-    private UserEntity owner;
-    private LocalDate date;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
+    private String producerId;
+    private Date startPoint;
+    private Date endPoint;
     private boolean booked;
-    private UserEntity acquirer;
+    private String consumerId;
+    private boolean cancelled;
+    private String cancellationReason;
+    private boolean complete;
 
-    public TimeSlot(UserEntity owner, LocalDate date, LocalTime startingTime, LocalTime endingTime) {
-        this.owner = owner;
-        this.date = date;
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
+    public TimeSlot() {}
+
+    public TimeSlot(String producerId, Date startPoint, Date endPoint) {
+        this.producerId = producerId;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
         this.booked = false;
+        this.consumerId = null;
+        this.cancelled = false;
+        this.cancellationReason = null;
+        this.complete = false;
     }
 
-    public UserEntity getOwner() {
-        return owner;
+    public String getProducerId() {
+        return producerId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void setProducerId(String producerId) {
+        this.producerId = producerId;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public Date getStartPoint() {
+        return startPoint;
     }
 
-    public LocalTime getStartingTime() {
-        return startingTime;
+    public void setStartPoint(Date startPoint) {
+        this.startPoint = startPoint;
     }
 
-    public void setStartingTime(LocalTime startingTime) {
-        this.startingTime = startingTime;
+    public Date getEndPoint() {
+        return endPoint;
     }
 
-    public LocalTime getEndingTime() {
-        return endingTime;
-    }
-
-    public void setEndingTime(LocalTime endingTime) {
-        this.endingTime = endingTime;
+    public void setEndPoint(Date endPoint) {
+        this.endPoint = endPoint;
     }
 
     public boolean isBooked() {
@@ -57,29 +58,46 @@ public class TimeSlot {
         this.booked = booked;
     }
 
-    public UserEntity getAcquirer() {
-        return acquirer;
+    public String getConsumerId() {
+        return consumerId;
     }
 
-    public void setAcquirer(UserEntity acquirer) {
-        this.acquirer = acquirer;
+    public void setConsumerId(String consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void setCancellationReason(String cancellationReason) {
+        this.cancellationReason = cancellationReason;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TimeSlot timeSlot = (TimeSlot) o;
-        return booked == timeSlot.booked &&
-                owner.equals(timeSlot.owner) &&
-                date.equals(timeSlot.date) &&
-                startingTime.equals(timeSlot.startingTime) &&
-                endingTime.equals(timeSlot.endingTime) &&
-                Objects.equals(acquirer, timeSlot.acquirer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(owner, date, startingTime, endingTime, booked, acquirer);
+    public String toString() {
+        return "TimeSlot{" +
+                "producerId='" + producerId + '\'' +
+                ", startPoint=" + startPoint +
+                ", endPoint=" + endPoint +
+                ", booked=" + booked +
+                ", consumerId='" + consumerId + '\'' +
+                '}';
     }
 }
