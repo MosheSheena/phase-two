@@ -1,9 +1,9 @@
 package com.example.phasetwo.activities.ui.consumer;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +27,7 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
     private BookingAdapter adapter;
     private RecyclerView recyclerView;
 
-    private final int NUMBER_OF_SLOTS = 20;
-
-    private String userName;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +40,15 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         if(intent.hasExtra(Intent.EXTRA_USER)) {
-            userName = intent.getStringExtra(Intent.EXTRA_USER);
+            uid = intent.getStringExtra(Intent.EXTRA_USER);
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.consumerBookingRV);
+        recyclerView = findViewById(R.id.consumerBookingRV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        viewModel.getAvailableBookings().observe(this, new Observer<List<TimeSlot>>() {
+        viewModel.getAvailableTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
                 adapter = new BookingAdapter(timeSlots, ConsumerBookingActivity.this);
@@ -58,21 +56,27 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
             }
         });
 
-        viewModel.getAvailableTimeSlotsForConsumer(userName, NUMBER_OF_SLOTS);
+        viewModel.getAvailableTimeSlotsForConsumer(uid);
     }
 
     @Override
     public void onListItemClicked(int clickedItemIndex) {
-        final TimeSlot timeSlot = viewModel.getAvailableBookings().getValue().get(clickedItemIndex);
+        final Context context = getApplicationContext();
+        final TimeSlot timeSlot = viewModel.getAvailableTimeSlots().getValue().get(clickedItemIndex);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.booking_title)
-                .setMessage("Confirm ?");
+                .setMessage("Book this time-slot ?");
 
         builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                viewModel.bookTime(userName, timeSlot);
+                viewModel.bookTimeSlot(timeSlot.getId(), uid);
+
+                Intent intent = new Intent(context, ConsumerMenuActivity.class);
+                intent.putExtra(Intent.EXTRA_USER, uid);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "time-slot successfully booked");
+                startActivity(intent);
             }
         });
 

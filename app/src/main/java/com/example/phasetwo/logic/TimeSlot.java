@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TimeSlot {
 
+    private String id;
     private String producerId;
     private Date startPoint;
     private Date endPoint;
@@ -16,6 +17,7 @@ public class TimeSlot {
     public TimeSlot() {}
 
     public TimeSlot(String producerId, Date startPoint, Date endPoint) {
+        this.id = null;
         this.producerId = producerId;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -24,6 +26,14 @@ public class TimeSlot {
         this.cancelled = false;
         this.cancellationReason = null;
         this.complete = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getProducerId() {

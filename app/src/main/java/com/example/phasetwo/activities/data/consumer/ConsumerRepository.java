@@ -1,15 +1,19 @@
 package com.example.phasetwo.activities.data.consumer;
 
-import com.example.phasetwo.activities.data.Result;
-import com.example.phasetwo.logic.TimeSlot;
-
-import java.util.List;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ConsumerRepository {
 
     private static volatile ConsumerRepository instance;
 
-    private ConsumerRepository() {}
+    private ConsumerFirebaseHelper fireBaseHelper;
+
+    private ConsumerRepository() {
+        fireBaseHelper = ConsumerFirebaseHelper.getInstance();
+    }
 
     public static ConsumerRepository getInstance() {
         if (instance == null) {
@@ -18,11 +22,18 @@ public class ConsumerRepository {
         return instance;
     }
 
-    public Result<List<TimeSlot>> getBookings(String userName, int numberOfBookings) {
-        return null;
+    public void getAvailableTimeSlotsForConsumer(OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        fireBaseHelper.getAvailableTimeSlotsForConsumer(onCompleteListener);
     }
 
-    public Result<List<TimeSlot>> getAvailableTimeSlotsForConsumer(String userName, int numberOfSlotsToGet) {
-        return null;
+    public void getConsumerFutureBookings(String consumerUid,
+                                          OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        fireBaseHelper.getConsumerFutureBookings(consumerUid, onCompleteListener);
+    }
+
+    public void bookTimeSlot(String timeSlotId, String consumerUid,
+                             OnSuccessListener<Void> onSuccessListener,
+                             OnFailureListener onFailureListener) {
+        fireBaseHelper.bookTimeSlot(timeSlotId, consumerUid, onSuccessListener, onFailureListener);
     }
 }

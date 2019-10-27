@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.phasetwo.R;
 import com.example.phasetwo.adapters.TimeSlotsAdapter;
@@ -28,9 +28,7 @@ public class ConsumerMenuActivity extends AppCompatActivity {
     private TimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
-    private final int NUMBER_OF_BOOKINGS = 20;
-
-    private String userName;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +40,20 @@ public class ConsumerMenuActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        if(intent.hasExtra(Intent.EXTRA_USER)) {
-            userName = intent.getStringExtra(Intent.EXTRA_USER);
+        if (intent.hasExtra(Intent.EXTRA_USER)) {
+            uid = intent.getStringExtra(Intent.EXTRA_USER);
+        }
+        if (intent.hasExtra(Intent.EXTRA_SUBJECT)) {
+            String message = intent.getStringExtra(Intent.EXTRA_SUBJECT);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.consumerMenuRV);
+        recyclerView = findViewById(R.id.consumerMenuRV);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
+        viewModel.getFutureBookings().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
                 adapter = new TimeSlotsAdapter(timeSlots);
@@ -59,7 +61,7 @@ public class ConsumerMenuActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getConsumerBookings(userName, NUMBER_OF_BOOKINGS);
+        viewModel.getConsumerFutureBookings(uid);
     }
 
     @Override
@@ -71,7 +73,6 @@ public class ConsumerMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        Context context = ConsumerMenuActivity.this;
 
         switch (menuItemThatWasSelected) {
             case R.id.consumer_action_view: {
@@ -79,7 +80,7 @@ public class ConsumerMenuActivity extends AppCompatActivity {
             }
             case R.id.consumer_action_book: {
                 Intent intent = new Intent(this, ConsumerBookingActivity.class);
-                intent.putExtra(Intent.EXTRA_USER, userName);
+                intent.putExtra(Intent.EXTRA_USER, uid);
                 startActivity(intent);
                 break;
             }
@@ -89,4 +90,12 @@ public class ConsumerMenuActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.getConsumerFutureBookings(uid);
+    }
+
+
 }
