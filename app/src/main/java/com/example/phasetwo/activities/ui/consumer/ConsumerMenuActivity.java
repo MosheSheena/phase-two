@@ -90,12 +90,4 @@ public class ConsumerMenuActivity extends AppCompatActivity {
         }
         return true;
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        viewModel.getConsumerFutureBookings(uid);
-    }
-
-
 }
