@@ -17,6 +17,10 @@ public class ProducerFirebaseHelper {
 
     private final String PRODUCER_TIME_SLOT_COLLECTION = "producerTimeSlots";
     private final String BOOKED_FIELD = "booked";
+    private final String PRODUCER_ID_FIELD = "producerId";
+    private final String START_POINT_FIELD = "startPoint";
+    private final String END_POINT_FIELD = "endPoint";
+    private final String COMPLETE_FIELD = "complete";
 
     private ProducerFirebaseHelper() {
         db = FirebaseFirestore.getInstance();
@@ -58,6 +62,22 @@ public class ProducerFirebaseHelper {
                 .addOnFailureListener(onFailureListener);
     }
 
-    public void cancelBookedTimeSlot(String timeSlotId, String reason) {
+    public void checkIfTimeSlotExists(TimeSlot timeSlot,
+                                      OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        db.collection(PRODUCER_TIME_SLOT_COLLECTION)
+                .whereEqualTo(PRODUCER_ID_FIELD, timeSlot.getProducerId())
+                .whereEqualTo(START_POINT_FIELD, timeSlot.getStartPoint())
+                .whereEqualTo(END_POINT_FIELD, timeSlot.getEndPoint())
+                .get()
+                .addOnCompleteListener(onCompleteListener);
+    }
+
+    public void getAllUnCompletedTimeSlots(TimeSlot timeSlot,
+                                                OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        db.collection(PRODUCER_TIME_SLOT_COLLECTION)
+                .whereEqualTo(PRODUCER_ID_FIELD, timeSlot.getProducerId())
+                .whereEqualTo(COMPLETE_FIELD, false)
+                .get()
+                .addOnCompleteListener(onCompleteListener);
     }
 }

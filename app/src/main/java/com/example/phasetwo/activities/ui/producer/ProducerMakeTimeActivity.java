@@ -203,7 +203,19 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
                     Date end = new GregorianCalendar(mChosenYear, mChosenMonth, mChosenDay,
                             mChosenEndHour, mChosenEndMinute).getTime();
 
-                    viewModel.createNewTimeSlot(uid, start, end);
+                    if (start.before(end)) {
+                        viewModel.createNewTimeSlot(uid, start, end);
+                    } else {
+                        // Reset fields and disable button
+                        startTimeDisplay.setText("");
+                        endTimeDisplay.setText("");
+                        makeTimeButton.setEnabled(false);
+
+                        Toast.makeText(getApplicationContext(),
+                                "Time-Slot cannot start after it ends",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
                 }
             }
         });

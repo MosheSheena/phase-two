@@ -51,6 +51,16 @@ public class ProducerRepository {
         firebaseHelper.createNewTimeSlot(timeSlot, onSuccessListener, onFailureListener);
     }
 
+    public void checkIfTimeSlotExists(TimeSlot timeSlot,
+                                      OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        firebaseHelper.checkIfTimeSlotExists(timeSlot, onCompleteListener);
+    }
+
+    public void getAllUnCompletedTimeSlots(TimeSlot timeSlot,
+                                           OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        firebaseHelper.getAllUnCompletedTimeSlots(timeSlot, onCompleteListener);
+    }
+
     public Result<Boolean> cancelBookedTimeSlot(String timeSlotId, String reason) {
         return null;
     }
