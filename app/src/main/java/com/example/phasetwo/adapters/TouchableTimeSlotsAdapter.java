@@ -12,11 +12,11 @@ import com.example.phasetwo.logic.TimeSlot;
 
 import java.util.List;
 
-public class BookingAdapter extends TimeSlotsAdapter {
+public class TouchableTimeSlotsAdapter extends TimeSlotsAdapter {
 
     final private ListItemClickListener itemClickListener;
 
-    public BookingAdapter(List<TimeSlot> timeSlots, ListItemClickListener itemClickListener) {
+    public TouchableTimeSlotsAdapter(List<TimeSlot> timeSlots, ListItemClickListener itemClickListener) {
         super(timeSlots);
         this.itemClickListener = itemClickListener;
     }

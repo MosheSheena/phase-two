@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phasetwo.R;
 import com.example.phasetwo.logic.TimeSlot;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.TimeSlotViewHolder> {
 
@@ -43,9 +45,12 @@ public class TimeSlotsAdapter extends RecyclerView.Adapter<TimeSlotsAdapter.Time
     public void onBindViewHolder(@NonNull TimeSlotViewHolder holder, int position) {
         TimeSlot timeSlot = timeSlots.get(position);
 
-        holder.setDateText(timeSlot.getDate().toString());
-        holder.setStartingTimeText(timeSlot.getStartingTime().toString());
-        holder.setEndingTimeText(timeSlot.getEndingTime().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        holder.setDateText(dateFormat.format(timeSlot.getStartPoint()));
+        holder.setStartingTimeText(timeFormat.format(timeSlot.getStartPoint()));
+        holder.setEndingTimeText(timeFormat.format(timeSlot.getEndPoint()));
     }
 
     @Override

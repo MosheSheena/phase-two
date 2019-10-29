@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.phasetwo.activities.data.producer.ProducerDataSource;
 import com.example.phasetwo.activities.data.producer.ProducerRepository;
 
 public class ProducerMakeTimeViewModelFactory implements ViewModelProvider.Factory {
@@ -14,7 +13,7 @@ public class ProducerMakeTimeViewModelFactory implements ViewModelProvider.Facto
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ProducerMakeTimeViewModel.class)) {
-            return (T) new ProducerMakeTimeViewModel(ProducerRepository.getInstance(new ProducerDataSource()));
+            return (T) new ProducerMakeTimeViewModel(ProducerRepository.getInstance());
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

@@ -1,6 +1,5 @@
 package com.example.phasetwo.activities.ui.producer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,9 +27,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
     private TimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
-    private final int NUMBER_OF_TIME_SLOTS = 20;
-
-    private String userName;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +40,10 @@ public class ProducerMenuActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         if (intent.hasExtra(Intent.EXTRA_USER)) {
-            userName = intent.getStringExtra(Intent.EXTRA_USER);
+            uid = intent.getStringExtra(Intent.EXTRA_USER);
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_producer_menu);
+        recyclerView = findViewById(R.id.rv_producer_menu);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -59,7 +56,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.fetchTimeSlots(userName, NUMBER_OF_TIME_SLOTS);
+        viewModel.fetchTimeSlots(uid);
     }
 
     @Override
@@ -71,7 +68,6 @@ public class ProducerMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemThatWasSelected = item.getItemId();
-        Context context = ProducerMenuActivity.this;
 
         switch (menuItemThatWasSelected) {
             case R.id.producer_action_view: {
@@ -79,7 +75,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
             }
             case R.id.producer_action_make: {
                 Intent intent = new Intent(this, ProducerMakeTimeActivity.class);
-                intent.putExtra(Intent.EXTRA_USER, userName);
+                intent.putExtra(Intent.EXTRA_USER, uid);
                 startActivity(intent);
                 break;
             }
