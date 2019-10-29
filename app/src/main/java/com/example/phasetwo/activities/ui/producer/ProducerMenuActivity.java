@@ -56,7 +56,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getBookedTimeSlots(uid);
+        viewModel.fetchTimeSlots(uid);
     }
 
     @Override

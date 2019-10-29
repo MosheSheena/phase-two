@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
@@ -35,7 +36,9 @@ public class ProducerFirebaseHelper {
 
     public void getTimeSlots(String uid,
                              OnCompleteListener<QuerySnapshot> onCompleteListener) {
-        db.collection(PRODUCER_TIME_SLOT_COLLECTION).get()
+        db.collection(PRODUCER_TIME_SLOT_COLLECTION)
+                .whereEqualTo(PRODUCER_ID_FIELD, uid)
+                .get()
                 .addOnCompleteListener(onCompleteListener);
 
     }
@@ -43,14 +46,6 @@ public class ProducerFirebaseHelper {
     public void getTimeSlots(String uid, LocalDate since, int numberOfTimeSlots,
                              OnSuccessListener<Void> onSuccessListener,
                              OnFailureListener onFailureListener) {
-    }
-
-    public void getBookedTimeSlots(String producerUid,
-                                   OnCompleteListener<QuerySnapshot> onCompleteListener) {
-        db.collection(PRODUCER_TIME_SLOT_COLLECTION)
-                .whereEqualTo(BOOKED_FIELD, true)
-                .get()
-                .addOnCompleteListener(onCompleteListener);
     }
 
     public void createNewTimeSlot(TimeSlot timeSlot,

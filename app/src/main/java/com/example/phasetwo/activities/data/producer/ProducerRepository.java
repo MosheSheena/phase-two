@@ -8,8 +8,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Date;
-
 public class ProducerRepository {
 
     private static final String TAG = ProducerRepository.class.getSimpleName();
@@ -26,23 +24,9 @@ public class ProducerRepository {
         return instance;
     }
 
-    public void getTimeSlots(String producerUid,
-                             OnCompleteListener<QuerySnapshot> onCompleteListener) {
+    public void fetchTimeSlots(String producerUid,
+                               OnCompleteListener<QuerySnapshot> onCompleteListener) {
         firebaseHelper.getTimeSlots(producerUid, onCompleteListener);
-    }
-
-    public void getTimeSlots(String producerUid, Date since, int numberOfTimeSlots,
-                                               OnCompleteListener<QuerySnapshot> onCompleteListener) {
-    }
-
-    public void getBookedTimeSlots(String producerUid,
-                                   OnCompleteListener<QuerySnapshot> onCompleteListener) {
-        firebaseHelper.getBookedTimeSlots(producerUid, onCompleteListener);
-    }
-
-    public void getBookedTimeSlots(String producerUid, Date since, int numberOfTimeSlots,
-                                   OnCompleteListener<QuerySnapshot> onCompleteListener) {
-        firebaseHelper.getBookedTimeSlots(producerUid, onCompleteListener);
     }
 
     public void createTimeSlot(TimeSlot timeSlot,
