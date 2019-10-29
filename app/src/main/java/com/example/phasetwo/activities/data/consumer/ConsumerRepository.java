@@ -26,14 +26,20 @@ public class ConsumerRepository {
         fireBaseHelper.getAvailableTimeSlotsForConsumer(onCompleteListener);
     }
 
-    public void getConsumerFutureBookings(String consumerUid,
-                                          OnCompleteListener<QuerySnapshot> onCompleteListener) {
-        fireBaseHelper.getConsumerFutureBookings(consumerUid, onCompleteListener);
+    public void getConsumerBookings(String consumerUid,
+                                    OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        fireBaseHelper.getConsumerBookings(consumerUid, onCompleteListener);
     }
 
     public void bookTimeSlot(String timeSlotId, String consumerUid,
                              OnSuccessListener<Void> onSuccessListener,
                              OnFailureListener onFailureListener) {
         fireBaseHelper.bookTimeSlot(timeSlotId, consumerUid, onSuccessListener, onFailureListener);
+    }
+
+    public void cancelBooking(String timeSlotId, String reason,
+                              OnSuccessListener<Void> onSuccessListener,
+                              OnFailureListener onFailureListener) {
+        fireBaseHelper.cancelBooking(timeSlotId, reason, onSuccessListener, onFailureListener);
     }
 }

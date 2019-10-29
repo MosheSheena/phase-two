@@ -1,31 +1,34 @@
 package com.example.phasetwo.activities.ui.consumer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.phasetwo.R;
-import com.example.phasetwo.adapters.TimeSlotsAdapter;
+import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 
 import java.util.List;
 
-public class ConsumerMenuActivity extends AppCompatActivity {
+public class ConsumerMenuActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener{
 
     private static final String TAG = ConsumerMenuActivity.class.getSimpleName();
 
     private ConsumerMenuViewModel viewModel;
 
-    private TimeSlotsAdapter adapter;
+    private TouchableTimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
     private String uid;
@@ -53,15 +56,15 @@ public class ConsumerMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        viewModel.getFutureBookings().observe(this, new Observer<List<TimeSlot>>() {
+        viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new TimeSlotsAdapter(timeSlots);
+                adapter = new TouchableTimeSlotsAdapter(timeSlots, ConsumerMenuActivity.this);
                 recyclerView.setAdapter(adapter);
             }
         });
 
-        viewModel.getConsumerFutureBookings(uid);
+        viewModel.getConsumerBookings(uid);
     }
 
     @Override
@@ -89,5 +92,33 @@ public class ConsumerMenuActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    @Override
+    public void onListItemClicked(int clickedItemIndex) {
+        final Context context = getApplicationContext();
+        final TimeSlot timeSlot = viewModel.getBookings().getValue().get(clickedItemIndex);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.booking_title)
+                .setMessage("Cancel this time-slot ?");
+
+        builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.cancelBooking(timeSlot.getId(), "N/A");
+                viewModel.getConsumerBookings(uid);
+            }
+        });
+
+        builder.setNegativeButton(R.string.booking_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Nothing really to do when the user regrets trying to cancel
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

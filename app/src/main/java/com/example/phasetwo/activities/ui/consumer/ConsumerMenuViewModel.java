@@ -7,9 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.phasetwo.R;
 import com.example.phasetwo.activities.data.consumer.ConsumerRepository;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -21,19 +24,21 @@ class ConsumerMenuViewModel extends ViewModel {
 
     private static final String TAG = ConsumerMenuViewModel.class.getSimpleName();
 
-    private MutableLiveData<List<TimeSlot>> futureBookings = new MutableLiveData<>();
     private ConsumerRepository repository;
+
+    private MutableLiveData<List<TimeSlot>> bookings = new MutableLiveData<>();
+    private MutableLiveData<BookingCancellationResult> cancellationResult = new MutableLiveData<>();
 
     ConsumerMenuViewModel(ConsumerRepository repository) {
         this.repository = repository;
     }
 
-    public LiveData<List<TimeSlot>> getFutureBookings() {
-        return futureBookings;
+    public LiveData<List<TimeSlot>> getBookings() {
+        return bookings;
     }
 
-    public void getConsumerFutureBookings(String consumerUid) {
-        repository.getConsumerFutureBookings(consumerUid, new OnCompleteListener<QuerySnapshot>() {
+    public void getConsumerBookings(String consumerUid) {
+        repository.getConsumerBookings(consumerUid, new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -48,12 +53,30 @@ class ConsumerMenuViewModel extends ViewModel {
 
                         getResults.add(timeSlot);
 
-                        futureBookings.setValue(getResults);
+                        bookings.setValue(getResults);
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
+    }
+
+    public void cancelBooking(String timeSlotId, String reason) {
+        repository.cancelBooking(timeSlotId, reason,
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        cancellationResult.postValue(new BookingCancellationResult(Boolean.TRUE));
+                    }
+                },
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                        cancellationResult.postValue(new BookingCancellationResult(R.string.cancel_failed));
+                    }
+                });
     }
 }

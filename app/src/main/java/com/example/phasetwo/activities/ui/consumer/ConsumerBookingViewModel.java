@@ -17,7 +17,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 class ConsumerBookingViewModel extends ViewModel {
@@ -62,20 +61,18 @@ class ConsumerBookingViewModel extends ViewModel {
         });
     }
 
-    public void getAvailableTimeSlotsForConsumer(String consumerUid, Date since, int numberOfSlotsToGet) {
-    }
-
     public void bookTimeSlot(String timeSlotId, String consumerUid) {
-        repository.bookTimeSlot(timeSlotId, consumerUid, new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully updated!");
-            }
-        }, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error updating document", e);
-            }
-        });
+        repository.bookTimeSlot(timeSlotId, consumerUid,
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                }, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 }

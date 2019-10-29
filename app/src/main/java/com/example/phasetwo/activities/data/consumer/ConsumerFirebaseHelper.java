@@ -16,6 +16,8 @@ public class ConsumerFirebaseHelper {
     private final String BOOKED_FIELD = "booked";
     private final String CONSUMER_UID_FIELD = "consumerId";
     private final String COMPLETE_FIELD = "complete";
+    private final String CANCELLED_FIELD = "cancelled";
+    private final String CANCEL_REASON_FIELD = "cancellationReason";
 
     public static ConsumerFirebaseHelper getInstance() {
         return instance;
@@ -30,12 +32,12 @@ public class ConsumerFirebaseHelper {
                 .addOnCompleteListener(onCompleteListener);
     }
 
-    public void getConsumerFutureBookings(String consumerUid,
-                                          OnCompleteListener<QuerySnapshot> onCompleteListener) {
+    public void getConsumerBookings(String consumerUid,
+                                    OnCompleteListener<QuerySnapshot> onCompleteListener) {
         db.collection(PRODUCER_TIME_SLOT_COLLECTION)
                 .whereEqualTo(CONSUMER_UID_FIELD, consumerUid)
                 .whereEqualTo(BOOKED_FIELD, true)
-                .whereEqualTo(COMPLETE_FIELD, false)
+                .whereEqualTo(CANCELLED_FIELD, false)
                 .get()
                 .addOnCompleteListener(onCompleteListener);
     }
@@ -48,6 +50,18 @@ public class ConsumerFirebaseHelper {
 
         documentReference.update(BOOKED_FIELD, true,
                 CONSUMER_UID_FIELD, consumerUid)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void cancelBooking(String timeSlotId, String reason,
+                              OnSuccessListener<Void> onSuccessListener,
+                              OnFailureListener onFailureListener) {
+        DocumentReference documentReference = db.collection(PRODUCER_TIME_SLOT_COLLECTION)
+                .document(timeSlotId);
+
+        documentReference.update(CANCELLED_FIELD, true,
+                CANCEL_REASON_FIELD, reason)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }

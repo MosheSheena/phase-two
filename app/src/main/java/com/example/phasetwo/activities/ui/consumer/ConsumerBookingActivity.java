@@ -13,18 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
-import com.example.phasetwo.adapters.BookingAdapter;
+import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 
 import java.util.List;
 
-public class ConsumerBookingActivity extends AppCompatActivity implements BookingAdapter.ListItemClickListener {
+public class ConsumerBookingActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener {
 
     private static final String TAG = ConsumerBookingActivity.class.getSimpleName();
 
     private ConsumerBookingViewModel viewModel;
 
-    private BookingAdapter adapter;
+    private TouchableTimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
     private String uid;
@@ -51,7 +51,7 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Bookin
         viewModel.getAvailableTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new BookingAdapter(timeSlots, ConsumerBookingActivity.this);
+                adapter = new TouchableTimeSlotsAdapter(timeSlots, ConsumerBookingActivity.this);
                 recyclerView.setAdapter(adapter);
             }
         });
