@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:id="@+id/consumer_action_view"
+        android:title="@string/activity_consumer_menu_view">
+    </item>
+    <item
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:id="@+id/consumer_action_book"
+        android:title="@string/activity_consumer_menu_book">
+    </item>
+</menu>

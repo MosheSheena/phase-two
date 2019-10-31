@@ -1,3 +1,58 @@
 <resources>
+
+    <!--GENERAL-->
+    <string name="logout">Logout</string>
+
+    <!--Main activity-->
     <string name="app_name">PhaseTwo</string>
+    <string name="activity_main_title">Phase-Two</string>
+    <string name="activity_main_user_name_input">User name</string>
+    <string name="activity_main_password_input">Password</string>
+    <string name="activity_main_credentials_submit_txt">Submit</string>
+    <string name="activity_main_dont_have_account_txt">Don\'t have an account?</string>
+    <string name="activity_main_create_account_btn_txt">Create an account</string>
+
+    <!--Create account activity-->
+    <string name="activity_create_account_title">Registration</string>
+    <string name="activity_create_account_name_input_txt">Name</string>
+    <string name="activity_create_account_email_input_txt">Email</string>
+    <string name="activity_create_account_password_input_txt">Password</string>
+    <string name="activity_create_account_password_confirm_input_txt">Confirm password</string>
+    <string name="activity_create_account_create_btn_txt">CREATE ACCOUNT</string>
+    <string name="activity_create_account_user_type_producer">PRODUCER</string>
+    <string name="activity_create_account_user_type_consumer">CONSUMER</string>
+
+    <!--Prodcuer menu activity-->
+    <string name="activity_producer_menu_view">View time</string>
+    <string name="activity_producer_menu_make">Make time</string>
+
+    <!--Prodcuer make time activity-->
+    <string name="activity_producer_make_time_date_btn_txt">Choose date</string>
+    <string name="activity_producer_make_time_stime_btn_txt">Choose Start time</string>
+    <string name="activity_producer_make_time_etime_btn_txt">Choose End time</string>
+    <string name="activity_producer_make_time_make_btn_txt">Make Time</string>
+    <string name="activity_producer_make_time_creation_fail_msg">Failed creating time slot</string>
+    <string name="activity_producer_make_time_already_exists_fail_msg">Time-Slot already exists</string>
+    <string name="activity_producer_make_time_overlap_fail_msg">There is already an overlapping time-slot</string>
+
+    <!--Consumer menu activity-->
+    <string name="activity_consumer_menu_view">View time</string>
+    <string name="activity_consumer_menu_book">Book time</string>
+
+    <string name="title_activity_login">Phase two</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="cancel_failed">"Cancellation failed"</string>
+
+    <!--Consumer booking activity-->
+    <string name="booking_title">Booking</string>
+    <string name="booking_confirm">Confirm</string>
+    <string name="booking_cancel">Cancel</string>
 </resources>

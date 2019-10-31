@@ -2,20 +2,48 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.phasetwo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.AppCompat.Light">
+        <activity
+            android:name=".activities.ui.consumer.ConsumerBookingActivity"
+            android:parentActivityName=".activities.ui.consumer.ConsumerMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ui.consumer.ConsumerMenuActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ui.producer.ProducerMakeTimeActivity"
+            android:parentActivityName=".activities.ui.producer.ProducerMenuActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activities.ui.producer.ProducerMenuActivity" />
+
+        <activity
+            android:name=".activities.ui.login.LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ui.consumer.ConsumerMenuActivity" />
+        <activity android:name=".activities.ui.producer.ProducerMenuActivity" />
+        <activity
+            android:name=".activities.CreateAccountActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+        <activity android:name=".activities.MainActivity" />
     </application>
-
 </manifest>
