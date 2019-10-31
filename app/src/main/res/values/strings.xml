@@ -1,4 +1,8 @@
 <resources>
+
+    <!--GENERAL-->
+    <string name="logout">Logout</string>
+
     <!--Main activity-->
     <string name="app_name">PhaseTwo</string>
     <string name="activity_main_title">Phase-Two</string>

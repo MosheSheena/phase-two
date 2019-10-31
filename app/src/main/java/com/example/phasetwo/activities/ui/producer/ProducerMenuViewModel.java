@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.phasetwo.activities.data.login.FirebaseLoginRepository;
 import com.example.phasetwo.activities.data.producer.ProducerRepository;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,5 +53,10 @@ class ProducerMenuViewModel extends ViewModel {
                         }
                     }
                 });
+    }
+
+    public void logout() {
+        FirebaseLoginRepository repository = FirebaseLoginRepository.getInstance();
+        repository.logOutCurrentUser();
     }
 }

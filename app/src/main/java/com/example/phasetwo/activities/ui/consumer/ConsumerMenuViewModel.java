@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.phasetwo.R;
 import com.example.phasetwo.activities.data.consumer.ConsumerRepository;
+import com.example.phasetwo.activities.data.login.FirebaseLoginRepository;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -78,5 +79,10 @@ class ConsumerMenuViewModel extends ViewModel {
                         cancellationResult.postValue(new BookingCancellationResult(R.string.cancel_failed));
                     }
                 });
+    }
+
+    public void logout() {
+        FirebaseLoginRepository repository = FirebaseLoginRepository.getInstance();
+        repository.logOutCurrentUser();
     }
 }

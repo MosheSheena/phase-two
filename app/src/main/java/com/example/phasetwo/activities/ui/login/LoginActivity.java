@@ -41,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
+        loginViewModel.getCurrentLoggedInUser().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String uid) {
+                moveToNextActivity(uid);
+            }
+        });
+
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -71,23 +78,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
-
-                    Class<?> activityToMoveTo;
-                    if (isUserAdmin(usernameEditText.getText().toString()))
-                        activityToMoveTo = ProducerMenuActivity.class;
-                    else
-                        activityToMoveTo = ConsumerMenuActivity.class;
-
-                    Intent intent = new Intent(LoginActivity.this, activityToMoveTo);
-                    intent.putExtra(Intent.EXTRA_USER, loginResult.getSuccess().getUserId());
-                    startActivity(intent);
+                    moveToNextActivity(loginResult.getSuccess().getUserId());
                 }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
             }
         });
+
+        loginViewModel.checkForLoggedInUser();
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -139,6 +135,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void moveToNextActivity(String uid) {
+        Class<?> activityToMoveTo;
+        if (isProducer(uid)) {
+            activityToMoveTo = ProducerMenuActivity.class;
+        } else {
+            activityToMoveTo = ConsumerMenuActivity.class;
+        }
+
+        Intent intent = new Intent(this, activityToMoveTo);
+        intent.putExtra(Intent.EXTRA_USER, uid);
+        startActivity(intent);
+        finish();
+    }
+
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
         // TODO : initiate successful logged in experience
@@ -149,7 +159,8 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
-    private boolean isUserAdmin(String email) {
-        return email.equals("producer@gmail.com");
+    // TODO: replace this method with a better way to distinguish a producer from a consumer
+    private boolean isProducer(String uid) {
+        return uid.equals("XOqufJHyVzOfEtS9hJL3Zpldfa53");
     }
 }

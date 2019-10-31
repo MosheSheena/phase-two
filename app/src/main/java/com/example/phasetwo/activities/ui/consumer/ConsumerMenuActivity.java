@@ -3,6 +3,9 @@ package com.example.phasetwo.activities.ui.consumer;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
+import com.example.phasetwo.activities.ui.login.LoginActivity;
 import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -101,5 +105,26 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                viewModel.logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
