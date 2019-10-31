@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".activities.ui.consumer.ConsumerBookingActivity"
             android:parentActivityName=".activities.ui.consumer.ConsumerMenuActivity">
             <meta-data

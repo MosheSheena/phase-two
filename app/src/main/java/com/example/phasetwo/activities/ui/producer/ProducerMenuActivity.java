@@ -2,10 +2,8 @@ package com.example.phasetwo.activities.ui.producer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phasetwo.R;
 import com.example.phasetwo.adapters.TimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
 
     private TimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
-
+    private FloatingActionButton fab;
     private String uid;
 
     @Override
@@ -48,6 +47,16 @@ public class ProducerMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        fab = findViewById(R.id.producer_menu_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProducerMakeTimeActivity.class);
+                intent.putExtra(Intent.EXTRA_USER, uid);
+                startActivity(intent);
+            }
+        });
+
         viewModel.getTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
@@ -57,32 +66,5 @@ public class ProducerMenuActivity extends AppCompatActivity {
         });
 
         viewModel.fetchTimeSlots(uid);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.producer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int menuItemThatWasSelected = item.getItemId();
-
-        switch (menuItemThatWasSelected) {
-            case R.id.producer_action_view: {
-                break;
-            }
-            case R.id.producer_action_make: {
-                Intent intent = new Intent(this, ProducerMakeTimeActivity.class);
-                intent.putExtra(Intent.EXTRA_USER, uid);
-                startActivity(intent);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        return true;
     }
 }

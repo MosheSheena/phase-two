@@ -1,14 +1,11 @@
 package com.example.phasetwo.activities.ui.consumer;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -19,15 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phasetwo.R;
 import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ConsumerMenuActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener{
+public class ConsumerMenuActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener {
 
     private static final String TAG = ConsumerMenuActivity.class.getSimpleName();
 
     private ConsumerMenuViewModel viewModel;
 
+    private FloatingActionButton fab;
     private TouchableTimeSlotsAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -51,10 +50,20 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
-        recyclerView = findViewById(R.id.consumerMenuRV);
+        recyclerView = findViewById(R.id.rv_consumer_schedule);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
+
+        fab = findViewById(R.id.consumer_schedule_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ConsumerBookingActivity.class);
+                intent.putExtra(Intent.EXTRA_USER, uid);
+                startActivity(intent);
+            }
+        });
 
         viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
             @Override
@@ -68,35 +77,7 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.consumer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int menuItemThatWasSelected = item.getItemId();
-
-        switch (menuItemThatWasSelected) {
-            case R.id.consumer_action_view: {
-                break;
-            }
-            case R.id.consumer_action_book: {
-                Intent intent = new Intent(this, ConsumerBookingActivity.class);
-                intent.putExtra(Intent.EXTRA_USER, uid);
-                startActivity(intent);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public void onListItemClicked(int clickedItemIndex) {
-        final Context context = getApplicationContext();
         final TimeSlot timeSlot = viewModel.getBookings().getValue().get(clickedItemIndex);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
