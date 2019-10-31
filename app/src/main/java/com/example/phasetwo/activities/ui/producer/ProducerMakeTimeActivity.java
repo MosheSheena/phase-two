@@ -182,9 +182,7 @@ public class ProducerMakeTimeActivity extends AppCompatActivity {
             @Override
             public void onChanged(TimeSlotCreationResult timeSlotCreationResult) {
                 if (timeSlotCreationResult.getSuccess() != null) {
-                    Intent intent = new Intent(getApplicationContext(), ProducerMenuActivity.class);
-                    intent.putExtra(Intent.EXTRA_USER, uid);
-                    startActivity(intent);
+                    finish();
                 } else {
                     if (timeSlotCreationResult.getError() != null) {
                         int errorMessage = timeSlotCreationResult.getError();

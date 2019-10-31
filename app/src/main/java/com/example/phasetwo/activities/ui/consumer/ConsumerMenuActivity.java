@@ -22,6 +22,7 @@ import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsumerMenuActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener {
@@ -59,6 +60,8 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        adapter = new TouchableTimeSlotsAdapter(new ArrayList<TimeSlot>(), this);
+
         fab = findViewById(R.id.consumer_schedule_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +75,7 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new TouchableTimeSlotsAdapter(timeSlots, ConsumerMenuActivity.this);
+                adapter.setTimeSlots(timeSlots);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -85,14 +88,14 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         final TimeSlot timeSlot = viewModel.getBookings().getValue().get(clickedItemIndex);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.booking_title)
+        builder.setTitle(R.string.booking_cancel)
                 .setMessage("Cancel this time-slot ?");
 
         builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 viewModel.cancelBooking(timeSlot.getId(), "N/A");
-                viewModel.getConsumerBookings(uid);
+                refreshAdapter();
             }
         });
 
@@ -126,5 +129,17 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshAdapter();
+    }
+
+    private void refreshAdapter() {
+        adapter.getTimeSlots().clear();
+        viewModel.getConsumerBookings(uid);
+        adapter.notifyDataSetChanged();
     }
 }

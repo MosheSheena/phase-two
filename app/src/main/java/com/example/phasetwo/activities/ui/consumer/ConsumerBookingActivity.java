@@ -61,7 +61,6 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Toucha
 
     @Override
     public void onListItemClicked(int clickedItemIndex) {
-        final Context context = getApplicationContext();
         final TimeSlot timeSlot = viewModel.getAvailableTimeSlots().getValue().get(clickedItemIndex);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -72,11 +71,7 @@ public class ConsumerBookingActivity extends AppCompatActivity implements Toucha
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 viewModel.bookTimeSlot(timeSlot.getId(), uid);
-
-                Intent intent = new Intent(context, ConsumerMenuActivity.class);
-                intent.putExtra(Intent.EXTRA_USER, uid);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "time-slot successfully booked");
-                startActivity(intent);
+                finish();
             }
         });
 

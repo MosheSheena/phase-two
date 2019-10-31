@@ -19,6 +19,7 @@ import com.example.phasetwo.adapters.TimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProducerMenuActivity extends AppCompatActivity {
@@ -51,6 +52,8 @@ public class ProducerMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        adapter = new TimeSlotsAdapter(new ArrayList<TimeSlot>());
+
         fab = findViewById(R.id.producer_menu_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +67,7 @@ public class ProducerMenuActivity extends AppCompatActivity {
         viewModel.getTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new TimeSlotsAdapter(timeSlots);
+                adapter.setTimeSlots(timeSlots);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -91,5 +94,17 @@ public class ProducerMenuActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshAdapter();
+    }
+
+    private void refreshAdapter() {
+        adapter.getTimeSlots().clear();
+        viewModel.fetchTimeSlots(uid);
+        adapter.notifyDataSetChanged();
     }
 }

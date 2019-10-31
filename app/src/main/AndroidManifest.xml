@@ -11,13 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".activities.ui.consumer.ConsumerBookingActivity"
+        <activity
+            android:name=".activities.ui.consumer.ConsumerBookingActivity"
             android:parentActivityName=".activities.ui.consumer.ConsumerMenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ui.consumer.ConsumerMenuActivity" />
         </activity>
-        <activity android:name=".activities.ui.producer.ProducerMakeTimeActivity" />
+        <activity
+            android:name=".activities.ui.producer.ProducerMakeTimeActivity"
+            android:parentActivityName=".activities.ui.producer.ProducerMenuActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ui.producer.ProducerMenuActivity"/>
         <activity
             android:name=".activities.ui.login.LoginActivity"
             android:label="@string/title_activity_login">
