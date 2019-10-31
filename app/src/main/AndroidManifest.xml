@@ -20,10 +20,12 @@
         </activity>
         <activity
             android:name=".activities.ui.producer.ProducerMakeTimeActivity"
-            android:parentActivityName=".activities.ui.producer.ProducerMenuActivity"/>
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.ui.producer.ProducerMenuActivity"/>
+            android:parentActivityName=".activities.ui.producer.ProducerMenuActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activities.ui.producer.ProducerMenuActivity" />
+
         <activity
             android:name=".activities.ui.login.LoginActivity"
             android:label="@string/title_activity_login">
@@ -44,5 +46,4 @@
         </activity>
         <activity android:name=".activities.MainActivity" />
     </application>
-
 </manifest>

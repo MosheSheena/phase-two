@@ -39,7 +39,7 @@
     <string name="activity_consumer_menu_view">View time</string>
     <string name="activity_consumer_menu_book">Book time</string>
 
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Phase two</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
