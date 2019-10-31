@@ -20,23 +20,28 @@ import java.util.Objects;
 public class LoginViewModel extends ViewModel {
 
     private static final String TAG = LoginViewModel.class.getSimpleName();
+    private static final int MINIMUM_PASSWORD_LENGTH = 5;
 
     private FirebaseLoginRepository repository;
 
-    private static final int MINIMUM_PASSWORD_LENGTH = 5;
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<String> currentLoggedInUser = new MutableLiveData<>();
 
-    LoginViewModel(FirebaseLoginRepository repository) {
+    public LoginViewModel(FirebaseLoginRepository repository) {
         this.repository = repository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
+    }
+
+    public LiveData<String> getCurrentLoggedInUser() {
+        return currentLoggedInUser;
     }
 
     public void login(String email, String password) {
@@ -83,6 +88,15 @@ public class LoginViewModel extends ViewModel {
             loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
         } else {
             loginFormState.setValue(new LoginFormState(true));
+        }
+    }
+
+    public void checkForLoggedInUser() {
+        String uid = repository.getCurrentLoggedInUser();
+        if (uid != null) {
+            currentLoggedInUser.postValue(uid);
+        } else {
+            currentLoggedInUser = null;
         }
     }
 

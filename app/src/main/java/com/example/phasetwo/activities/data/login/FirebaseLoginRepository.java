@@ -38,4 +38,17 @@ public class FirebaseLoginRepository {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(listener);
     }
+
+    public String getCurrentLoggedInUser() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            return user.getUid();
+        } else {
+            return null;
+        }
+    }
+
+    public void logOutCurrentUser() {
+        mAuth.signOut();
+    }
 }

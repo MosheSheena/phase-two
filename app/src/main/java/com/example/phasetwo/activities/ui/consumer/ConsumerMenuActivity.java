@@ -3,6 +3,9 @@ package com.example.phasetwo.activities.ui.consumer;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,10 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
+import com.example.phasetwo.activities.ui.login.LoginActivity;
 import com.example.phasetwo.adapters.TouchableTimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConsumerMenuActivity extends AppCompatActivity implements TouchableTimeSlotsAdapter.ListItemClickListener {
@@ -55,6 +60,8 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        adapter = new TouchableTimeSlotsAdapter(new ArrayList<TimeSlot>(), this);
+
         fab = findViewById(R.id.consumer_schedule_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +75,7 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         viewModel.getBookings().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new TouchableTimeSlotsAdapter(timeSlots, ConsumerMenuActivity.this);
+                adapter.setTimeSlots(timeSlots);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -81,14 +88,14 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
         final TimeSlot timeSlot = viewModel.getBookings().getValue().get(clickedItemIndex);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.booking_title)
+        builder.setTitle(R.string.booking_cancel)
                 .setMessage("Cancel this time-slot ?");
 
         builder.setPositiveButton(R.string.booking_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 viewModel.cancelBooking(timeSlot.getId(), "N/A");
-                viewModel.getConsumerBookings(uid);
+                refreshAdapter();
             }
         });
 
@@ -101,5 +108,38 @@ public class ConsumerMenuActivity extends AppCompatActivity implements Touchable
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                viewModel.logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshAdapter();
+    }
+
+    private void refreshAdapter() {
+        adapter.getTimeSlots().clear();
+        viewModel.getConsumerBookings(uid);
+        adapter.notifyDataSetChanged();
     }
 }

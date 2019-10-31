@@ -2,6 +2,9 @@ package com.example.phasetwo.activities.ui.producer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phasetwo.R;
+import com.example.phasetwo.activities.ui.login.LoginActivity;
 import com.example.phasetwo.adapters.TimeSlotsAdapter;
 import com.example.phasetwo.logic.TimeSlot;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProducerMenuActivity extends AppCompatActivity {
@@ -47,6 +52,8 @@ public class ProducerMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        adapter = new TimeSlotsAdapter(new ArrayList<TimeSlot>());
+
         fab = findViewById(R.id.producer_menu_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,11 +67,44 @@ public class ProducerMenuActivity extends AppCompatActivity {
         viewModel.getTimeSlots().observe(this, new Observer<List<TimeSlot>>() {
             @Override
             public void onChanged(List<TimeSlot> timeSlots) {
-                adapter = new TimeSlotsAdapter(timeSlots);
+                adapter.setTimeSlots(timeSlots);
                 recyclerView.setAdapter(adapter);
             }
         });
 
         viewModel.fetchTimeSlots(uid);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.general, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                viewModel.logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshAdapter();
+    }
+
+    private void refreshAdapter() {
+        adapter.getTimeSlots().clear();
+        viewModel.fetchTimeSlots(uid);
+        adapter.notifyDataSetChanged();
     }
 }

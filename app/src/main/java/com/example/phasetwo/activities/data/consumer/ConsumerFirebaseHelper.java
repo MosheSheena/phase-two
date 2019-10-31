@@ -23,7 +23,9 @@ public class ConsumerFirebaseHelper {
         return instance;
     }
 
-    private ConsumerFirebaseHelper() { db = FirebaseFirestore.getInstance(); }
+    private ConsumerFirebaseHelper() {
+        db = FirebaseFirestore.getInstance();
+    }
 
     public void getAvailableTimeSlotsForConsumer(OnCompleteListener<QuerySnapshot> onCompleteListener) {
         db.collection(PRODUCER_TIME_SLOT_COLLECTION)
@@ -37,7 +39,6 @@ public class ConsumerFirebaseHelper {
         db.collection(PRODUCER_TIME_SLOT_COLLECTION)
                 .whereEqualTo(CONSUMER_UID_FIELD, consumerUid)
                 .whereEqualTo(BOOKED_FIELD, true)
-                .whereEqualTo(CANCELLED_FIELD, false)
                 .get()
                 .addOnCompleteListener(onCompleteListener);
     }
@@ -60,8 +61,11 @@ public class ConsumerFirebaseHelper {
         DocumentReference documentReference = db.collection(PRODUCER_TIME_SLOT_COLLECTION)
                 .document(timeSlotId);
 
-        documentReference.update(CANCELLED_FIELD, true,
-                CANCEL_REASON_FIELD, reason)
+        documentReference.update(
+                CANCELLED_FIELD, true,
+                CANCEL_REASON_FIELD, reason,
+                BOOKED_FIELD, false,
+                CONSUMER_UID_FIELD, null)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
